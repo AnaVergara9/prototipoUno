@@ -134,7 +134,7 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
                 cmbActualizarFacElec.setSelectedItem("No");
             }
         } else {
-            System.out.println("No se encontró la empresa");
+            JOptionPane.showMessageDialog(null, "No se encontró la empresa");
         }
         
     }//GEN-LAST:event_btnBusActualizarActionPerformed

@@ -55,14 +55,12 @@ public class ServicioEmpresa {
                 double ingresos = file.readDouble();
                 boolean facturacion = file.readBoolean();
                 String estado = file.readUTF();
-                file.close();
                 if (nit == nitBuscado){
                     Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
                     return empresaBuscada;
-                }else{
-                    JOptionPane.showInternalMessageDialog(null, "No se encontro la Empresa buscada");
                 }
             }
+            file.close();
         } catch (IOException ex) {
             System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }  
