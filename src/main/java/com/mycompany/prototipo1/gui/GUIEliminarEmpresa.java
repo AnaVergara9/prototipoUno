@@ -152,9 +152,13 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int pNit =Integer.parseInt(txtNit.getText());
         Empresa emp = ServicioEmpresa.buscarEmpresa(pNit);
-        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+        if (emp != null){
+           DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado()});
+        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado()}); 
+        }else{
+            JOptionPane.showMessageDialog(this, "Empresa no encontrada");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

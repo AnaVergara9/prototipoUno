@@ -103,7 +103,7 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
         model.setRowCount(0);
         for(Empresa e : empresas){
              if (e.getEstado().equals("Activo")){
-                model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion()});
+                model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado()});
             }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed
