@@ -74,7 +74,7 @@ public class ServicioEmpresa {
         int pos = (contarRegistros(nit)*TAM_REGISTRO);
         
         try {
-            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             
             file.seek(pos-10);
             file.writeUTF(ajustarTamaño(TAM_ESTADO,"Inactivo"));
@@ -127,7 +127,7 @@ public class ServicioEmpresa {
         int contador = 0;
         
         try {
-            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             //Se posiciona al inicio del archivo
             file.seek(0);
             while(file.getFilePointer() < file.length()){
@@ -163,7 +163,7 @@ public class ServicioEmpresa {
         Empresa emp = null;
         
         try {
-            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             
             file.seek(0);
             
