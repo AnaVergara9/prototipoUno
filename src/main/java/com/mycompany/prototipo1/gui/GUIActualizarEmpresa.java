@@ -4,7 +4,10 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,113 +34,133 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtActualizarNombre = new javax.swing.JTextField();
-        txtActualizarIngresos = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         btnActualizar = new javax.swing.JButton();
-        cmbActualizarFact = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        txtBusActualizar = new javax.swing.JTextField();
+        txtActualizarNit = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBusActualizar = new javax.swing.JButton();
+        txtActualizarNombre = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtActualizarIngresos = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbActualizarFacElec = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Actualizar Empresa");
 
-        jLabel2.setText("Nombre: ");
-
-        jLabel3.setText("Ingresos Anuales: ");
-
-        jLabel1.setText("Ingrese únicamente los datos que desea actualizar");
-
         btnActualizar.setText("Actualizar");
-
-        cmbActualizarFact.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Modificar", "Si", "No" }));
-        cmbActualizarFact.addActionListener(this::cmbActualizarFactActionPerformed);
-
-        jLabel6.setText("Realiza Facturación Electronica");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         jLabel4.setText("NIT: ");
 
         btnBusActualizar.setText("Buscar");
         btnBusActualizar.addActionListener(this::btnBusActualizarActionPerformed);
 
+        jLabel5.setText("Nombre: ");
+
+        jLabel6.setText("Ingresos:");
+
+        jLabel7.setText("Factura Elec...");
+
+        cmbActualizarFacElec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtBusActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBusActualizar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtActualizarIngresos))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtActualizarNombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbActualizarFact, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtActualizarNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtActualizarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBusActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtActualizarIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(251, 251, 251)
+                        .addComponent(cmbActualizarFacElec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtBusActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtActualizarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtActualizarIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbActualizarFact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualizar)
+                    .addComponent(txtActualizarNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBusActualizar))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtActualizarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtActualizarIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbActualizarFacElec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbActualizarFactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbActualizarFactActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbActualizarFactActionPerformed
-
     private void btnBusActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActualizarActionPerformed
-        GUIActualizarEmpresa gui = new GUIActualizarEmpresa();
-        gui.setVisible(true);
+        int nit = Integer.parseInt(txtActualizarNit.getText());
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(nit);
 
-        int nit = Integer.parseInt(txtBusActualizar.getText());
-        ServicioEmpresa.buscarEmpresa(nit);
+        if (empresa != null) {
+            txtActualizarNombre.setText(empresa.getNombre().trim());
+            txtActualizarIngresos.setText(String.valueOf(empresa.getIngresosAnuales()).trim());
+            if (empresa.isFacturacion()) {
+                cmbActualizarFacElec.setSelectedItem("Si");
+            } else {
+                cmbActualizarFacElec.setSelectedItem("No");
+            }
+        } else {
+            System.out.println("No se encontró la empresa");
+        }
+        
     }//GEN-LAST:event_btnBusActualizarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        
+        int nit;
+        String nombre;
+        double ingresosAnuales;
+        boolean facturacion;
+        boolean res; 
+        
+        nit = Integer.parseInt(txtActualizarNit.getText());
+        nombre = txtActualizarNombre.getText();
+        ingresosAnuales = Double.parseDouble(txtActualizarIngresos.getText());
+        facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
+        Empresa empresa = new Empresa(nit, nombre, ingresosAnuales, facturacion, "Activo");
+        
+        res = ServicioEmpresa.actualizarEmpresa(empresa);
+        
+        if (res){
+            JOptionPane.showMessageDialog(null, "Empresa actualizada");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar");   
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,14 +190,13 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBusActualizar;
-    private javax.swing.JComboBox<String> cmbActualizarFact;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox<String> cmbActualizarFacElec;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtActualizarIngresos;
+    private javax.swing.JTextField txtActualizarNit;
     private javax.swing.JTextField txtActualizarNombre;
-    private javax.swing.JTextField txtBusActualizar;
     // End of variables declaration//GEN-END:variables
 }
