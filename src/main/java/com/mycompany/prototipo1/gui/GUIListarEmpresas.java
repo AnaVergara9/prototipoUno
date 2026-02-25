@@ -49,14 +49,14 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
+                "NIT", "Nombre", "Ingresos", "Fac. Electrónica"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,7 +102,9 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
         for(Empresa e : empresas){
-            model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado() });
+             if (e.getEstado().equals("Activo")){
+                model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion()});
+            }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed
 
