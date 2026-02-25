@@ -4,6 +4,8 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+
 /**
  *
  * @author anaso
@@ -39,6 +41,7 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
         setTitle("Sumatoria Ingresos Anuales");
 
         btSumatoria.setText("Calcular Sumatoria");
+        btSumatoria.addActionListener(this::btSumatoriaActionPerformed);
 
         jLabel1.setText("Total de empresas activas: ");
 
@@ -84,6 +87,13 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSumatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSumatoriaActionPerformed
+        int nActivos = ServicioEmpresa.contarRegistros(WIDTH);
+        double sumatoriaIngresos = ServicioEmpresa.sumatoria();
+        txtSumatoria.setText(String.valueOf(sumatoriaIngresos));
+        
+    }//GEN-LAST:event_btSumatoriaActionPerformed
 
     /**
      * @param args the command line arguments

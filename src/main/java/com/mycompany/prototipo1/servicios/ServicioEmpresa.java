@@ -185,5 +185,28 @@ public class ServicioEmpresa {
         return empresas;
     }
     
-    
+    public static double sumatoria(){
+        double sumatoria = 0;
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            //Se posiciona al inicio del archivo
+            file.seek(0);
+            while(file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facElec = file.readBoolean();
+                String estado = file.readUTF().trim();
+                
+                if (estado.equalsIgnoreCase("Activo")){
+                    sumatoria = sumatoria + ingresos;
+                }
+            }
+            file.close();
+            return sumatoria;
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+        }
+        return 0;
+    }
 }
