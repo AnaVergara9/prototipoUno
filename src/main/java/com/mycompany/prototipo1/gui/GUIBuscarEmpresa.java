@@ -4,7 +4,9 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,9 +36,9 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBuscarNit = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEmpresas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Empresa");
@@ -46,35 +48,25 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel2.setText("Ingrese el NIT de la empresa:");
+
+        tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "NIT", "Nombre", "Ganancias Anuales", "Facturación Electrónica", "Estado"
+                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel2.setText("Ingrese el NIT de la empresa:");
+        jScrollPane1.setViewportView(tblEmpresas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,19 +75,15 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(btnBuscar)))
-                        .addContainerGap(196, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(21, 21, 21))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnBuscar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,9 +95,9 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,7 +105,10 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
-        ServicioEmpresa.buscarEmpresa(nitBuscar);
+        Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
+        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado() });
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -150,7 +141,7 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblEmpresas;
     private javax.swing.JTextField txtBuscarNit;
     // End of variables declaration//GEN-END:variables
 }
