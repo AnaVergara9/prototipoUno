@@ -75,7 +75,32 @@ public class ServicioEmpresa {
         
     }
     
-    public static void actualizarEmpresa (int nit, String nombre, double ingresos, String facturacion){
-        
+    public static boolean actualizarEmpresa (Empresa empresa){
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
+            file.seek(0);
+            while (file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facturacion = file.readBoolean();
+                String estado = file.readUTF();
+          
+                if (nit == empresa.getNit()){
+                    file.seek(file.getFilePointer() - TAM_REGISTRO);
+                    file.writeInt(empresa.getNit());
+                    file.writeUTF(ajustarTamaño(TAM_NOMBRE, empresa.getNombre()));
+                    file.writeDouble(empresa.getIngresosAnuales());
+                    file.writeBoolean(empresa.isFacturacion());
+                    file.writeUTF(ajustarTamaño(TAM_ESTADO,empresa.getEstado()));
+                    file.close();    
+                    return true;
+                }
+            }
+        } catch (IOException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }  
+        return false;
     }
 }
