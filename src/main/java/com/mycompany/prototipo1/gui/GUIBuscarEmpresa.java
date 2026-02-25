@@ -6,6 +6,7 @@ package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,9 +62,16 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblEmpresas);
@@ -104,11 +112,16 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
         int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
         Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
-        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+        if (emp == null){
+            JOptionPane.showInternalMessageDialog(null, "Empresa no encontrada");
+        }else{
+            DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
         model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado() });
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

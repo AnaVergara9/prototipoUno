@@ -57,8 +57,8 @@ public class ServicioEmpresa {
                 String nombre = file.readUTF();
                 double ingresos = file.readDouble();
                 boolean facturacion = file.readBoolean();
-                String estado = file.readUTF();
-                if (nit == nitBuscado){
+                String estado = file.readUTF().trim();
+                if (nit == nitBuscado &  estado.equals("Activo")){
                     Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
                     return empresaBuscada;
                 }
@@ -153,7 +153,7 @@ public class ServicioEmpresa {
     }
     
     public static List obtenerEmpresas(){
-        //Se declara una variable llamada empleados de tipo ArrayList que permite "almacenar" objetos de tipo empleado
+        //Se declara una variable llamada empresas de tipo ArrayList que permite "almacenar" objetos de tipo empresa
         List <Empresa> empresas = new ArrayList();
         int nit;
         String nombre;
@@ -184,4 +184,6 @@ public class ServicioEmpresa {
         }
         return empresas;
     }
+    
+    
 }
