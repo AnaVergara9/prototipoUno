@@ -7,6 +7,7 @@ package com.mycompany.prototipo1.servicios;
 import com.mycompany.prototipo1.model.Empresa;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,14 +15,27 @@ import java.io.RandomAccessFile;
  */
 public class ServicioEmpresa {
     
+    public static final int TAM_NOMBRE = 25;
+    public static final int TAM_ESTADO = 8;
+    public static final int TAM_REGISTRO = 50;
+    
+    public static String ajustarTamaño(int m, String s) {
+    if (s.length() >= m) {
+        return s.substring(0, m);
+    } else {
+        return String.format("%-" + m + "s", s);
+    }
+   }
+    
     public static boolean guardarEmpresa (Empresa empresa){
         try {
-            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(file.length());
             file.writeInt(empresa.getNit());
-            file.writeUTF(empresa.getNombre());
+            file.writeUTF(ajustarTamaño(TAM_NOMBRE, empresa.getNombre()));
             file.writeDouble(empresa.getIngresosAnuales());
-            file.writeUTF(empresa.getEstado());
+            file.writeBoolean(empresa.isFacturacion());
+            file.writeUTF(ajustarTamaño(TAM_ESTADO,empresa.getEstado()));
             file.close();
             return true;
         } catch (IOException ex) {
@@ -30,11 +44,29 @@ public class ServicioEmpresa {
         }
     }
     
-    public static Empresa buscarEmpresa (int nit){
-        Empresa empresaBuscada = null;
-        
-        return empresaBuscada;
-        
+    public static Empresa buscarEmpresa (int nitBuscado){
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
+            file.seek(0);
+            while (file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facturacion = file.readBoolean();
+                String estado = file.readUTF();
+                file.close();
+                if (nit == nitBuscado){
+                    Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
+                    return empresaBuscada;
+                }else{
+                    JOptionPane.showInternalMessageDialog(null, "No se encontro la Empresa buscada");
+                }
+            }
+        } catch (IOException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }  
+        return null;
     }
     
     public static boolean eliminarEmpresa (int nit){
