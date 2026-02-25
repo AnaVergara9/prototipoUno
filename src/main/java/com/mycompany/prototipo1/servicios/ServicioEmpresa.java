@@ -5,6 +5,7 @@
 package com.mycompany.prototipo1.servicios;
 
 import com.mycompany.prototipo1.model.Empresa;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import javax.swing.JOptionPane;
@@ -67,9 +68,22 @@ public class ServicioEmpresa {
         return null;
     }
     
-    public static boolean eliminarEmpresa (int nit){
+    public static boolean eliminarEmpresa (int nit) throws IOException{
+        int pos = (contarRegistros(nit)*TAM_REGISTRO);
         
-        return false;
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            
+            file.seek(pos-10);
+            file.writeUTF(ajustarTamaño(TAM_ESTADO,"Inactivo"));
+            
+            file.close();
+
+        } catch (FileNotFoundException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return false;
+        }
+        return true;
         
     }
     
@@ -100,5 +114,39 @@ public class ServicioEmpresa {
             System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }  
         return false;
+    }
+    
+    public static int contarRegistros(int pNit){
+        int nit;
+        String nombre;
+        double ingresos;
+        boolean facElec;
+        String estado = "activo";
+        int contador = 0;
+        
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            //Se posiciona al inicio del archivo
+            file.seek(0);
+            while(file.getFilePointer() < file.length()){
+                nit = file.readInt();
+                nombre = file.readUTF();
+                ingresos = file.readDouble();
+                facElec = file.readBoolean();
+                estado = file.readUTF();
+                contador ++;
+                
+                if (nit == pNit){
+                    file.close();
+                    return contador;
+                }
+            }
+            file.close();
+            
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+        }
+
+        return -1;
     }
 }
