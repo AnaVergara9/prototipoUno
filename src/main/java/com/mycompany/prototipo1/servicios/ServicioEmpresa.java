@@ -8,6 +8,8 @@ import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -148,5 +150,38 @@ public class ServicioEmpresa {
         }
 
         return -1;
+    }
+    
+    public static List obtenerEmpresas(){
+        //Se declara una variable llamada empleados de tipo ArrayList que permite "almacenar" objetos de tipo empleado
+        List <Empresa> empresas = new ArrayList();
+        int nit;
+        String nombre;
+        double ingresos;
+        boolean facElec;
+        String estado = "activo";
+        Empresa emp = null;
+        
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//ejemplo.txt", "rw");
+            
+            file.seek(0);
+            
+            while(file.getFilePointer() < file.length()){
+                
+                nit = file.readInt();
+                nombre = file.readUTF().trim();
+                ingresos = file.readDouble();
+                facElec = file.readBoolean();
+                estado = file.readUTF().trim();
+                
+                emp = new Empresa(nit, nombre, ingresos, facElec, estado);
+                empresas.add(emp);
+            }
+            file.close();
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+        }
+        return empresas;
     }
 }

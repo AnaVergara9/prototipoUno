@@ -4,6 +4,11 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.model.Empresa;
+import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author anaso
@@ -30,13 +35,13 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbListar = new javax.swing.JTable();
-        btnListarTodos = new javax.swing.JButton();
+        tblEmpresas = new javax.swing.JTable();
+        btnListarTodo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Empresas");
 
-        tbListar.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -55,10 +60,10 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tbListar);
+        jScrollPane1.setViewportView(tblEmpresas);
 
-        btnListarTodos.setText("Listar Todos");
-        btnListarTodos.addActionListener(this::btnListarTodosActionPerformed);
+        btnListarTodo.setText("Listar Todo");
+        btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +72,7 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -76,24 +81,23 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnListarTodos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnListarTodo)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodosActionPerformed
+    private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        /*List <Empresa> empleados = ServicioEmpleado.getEmpleados();
-        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
+        List <Empresa> empresas = ServicioEmpresa.obtenerEmpresas();
+        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
-        for(Empleado e : empleados){
-            model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getSalario() });
-        
-        }*/
-    }//GEN-LAST:event_btnListarTodosActionPerformed
+        for(Empresa e : empresas){
+            model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado() });
+        }
+    }//GEN-LAST:event_btnListarTodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,8 +125,8 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnListarTodos;
+    private javax.swing.JButton btnListarTodo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbListar;
+    private javax.swing.JTable tblEmpresas;
     // End of variables declaration//GEN-END:variables
 }
