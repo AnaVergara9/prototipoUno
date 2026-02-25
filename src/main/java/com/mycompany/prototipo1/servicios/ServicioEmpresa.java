@@ -209,4 +209,31 @@ public class ServicioEmpresa {
         }
         return 0;
     }
+    
+    public static int registrosActivos(){
+        int contador = 0;
+        
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            //Se posiciona al inicio del archivo
+            file.seek(0);
+            while(file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facElec = file.readBoolean();
+                String estado = file.readUTF().trim();
+                
+                if (estado.equalsIgnoreCase("Activo")){
+                    contador ++;
+                }
+            }
+            file.close();
+            return contador;
+            
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+        }
+        return 0;
+    }
 }

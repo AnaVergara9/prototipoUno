@@ -89,9 +89,10 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSumatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSumatoriaActionPerformed
-        int nActivos = ServicioEmpresa.contarRegistros(WIDTH);
+        int nActivos = ServicioEmpresa.registrosActivos();
         double sumatoriaIngresos = ServicioEmpresa.sumatoria();
         txtSumatoria.setText(String.valueOf(sumatoriaIngresos));
+        txtRegistros.setText(String.valueOf(nActivos));
         
     }//GEN-LAST:event_btSumatoriaActionPerformed
 
