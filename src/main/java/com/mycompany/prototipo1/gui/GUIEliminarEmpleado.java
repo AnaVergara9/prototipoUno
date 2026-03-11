@@ -6,6 +6,7 @@ package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,14 +14,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author anaso
  */
-public class GUIBuscarEmpresa extends javax.swing.JFrame {
+public class GUIEliminarEmpleado extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIBuscarEmpresa.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEliminarEmpleado.class.getName());
 
     /**
-     * Creates new form GUIBuscarEmpresa
+     * Creates new form GUIEliminarEmpresa
      */
-    public GUIBuscarEmpresa() {
+    public GUIEliminarEmpleado() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -34,22 +35,23 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscarNit = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtNit = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpresas = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar Empresa");
+        setTitle("Eliminar Empresa");
+
+        jLabel2.setText("Ingrese el NIT de la empresa que desea eliminar:");
 
         jLabel1.setText("NIT: ");
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
-
-        jLabel2.setText("Ingrese el NIT de la empresa:");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,51 +78,86 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblEmpresas);
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnBuscar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addContainerGap(404, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar)
+                                .addGap(192, 192, 192)
+                                .addComponent(btnEliminar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar)
                     .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         try {
+            int opcion = JOptionPane.showConfirmDialog(
+            this,
+            "<html><center><b>¿Seguro desea eliminar esta empresa?</b></center></html>",
+            "CONFIRMAR",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+            );
+            
+            if (opcion == JOptionPane.YES_OPTION){
+                
+                boolean res;
+                int pNit =Integer.parseInt(txtNit.getText());
+                res = ServicioEmpresa.eliminarEmpresa(pNit);
+            
+                if(res) {
+                    JOptionPane.showMessageDialog(this, "Empresa eliminada correctamente!");                    
+                }
+            }
+        } catch (IOException ex) {
+            System.getLogger(GUIEliminarEmpleado.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Error al eliminar Empresa!"); 
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-        int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
-        Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
-        if (emp == null){
-            JOptionPane.showInternalMessageDialog(null, "Empresa no encontrada");
-        }else{
-            DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        int pNit =Integer.parseInt(txtNit.getText());
+        Empresa emp = ServicioEmpresa.buscarEmpresa(pNit);
+        if (emp != null){
+           DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado() });
+        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado()}); 
+        }else{
+            JOptionPane.showMessageDialog(this, "Empresa no encontrada");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -146,15 +183,16 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIBuscarEmpresa().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIEliminarEmpleado().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEmpresas;
-    private javax.swing.JTextField txtBuscarNit;
+    private javax.swing.JTextField txtNit;
     // End of variables declaration//GEN-END:variables
 }
