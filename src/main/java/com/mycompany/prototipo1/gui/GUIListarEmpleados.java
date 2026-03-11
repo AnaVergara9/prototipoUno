@@ -6,21 +6,21 @@ package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
-import javax.swing.JOptionPane;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author anaso
  */
-public class GUIBuscarEmpresa extends javax.swing.JFrame {
+public class GUIListarEmpleados extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIBuscarEmpresa.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarEmpleados.class.getName());
 
     /**
-     * Creates new form GUIBuscarEmpresa
+     * Creates new form GUIListarEmpresas
      */
-    public GUIBuscarEmpresa() {
+    public GUIListarEmpleados() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -34,22 +34,15 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscarNit = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        btnListarTodo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpresas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar Empresa");
+        setTitle("Listar Empresas");
 
-        jLabel1.setText("NIT: ");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
-
-        jLabel2.setText("Ingrese el NIT de la empresa:");
+        btnListarTodo.setText("Listar Todo");
+        btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
 
         tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,48 +74,39 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(btnBuscar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(btnListarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addComponent(btnListarTodo)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
-        Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
-        if (emp == null){
-            JOptionPane.showInternalMessageDialog(null, "Empresa no encontrada");
-        }else{
-            DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+        List <Empresa> empresas = ServicioEmpresa.obtenerEmpresas();
+        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado() });
+        for(Empresa e : empresas){
+             if (e.getEstado().equals("Activo")){
+                model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado()});
+            }
         }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnListarTodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,15 +130,12 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIBuscarEmpresa().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIListarEmpleados().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnListarTodo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEmpresas;
-    private javax.swing.JTextField txtBuscarNit;
     // End of variables declaration//GEN-END:variables
 }
