@@ -4,7 +4,9 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.model.Empleado;
 import com.mycompany.prototipo1.model.Empresa;
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
 import javax.swing.JOptionPane;
 
@@ -33,30 +35,27 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtNit = new javax.swing.JTextField();
+        txtDocumento = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtIngresos = new javax.swing.JTextField();
-        cmbFacturacion = new javax.swing.JComboBox<>();
+        txtSalario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        txtNitEmpresa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Empresa");
 
-        jLabel4.setText("NIT: ");
+        jLabel4.setText("Documento:");
 
         jLabel2.setText("Nombre: ");
 
-        jLabel3.setText("Ingresos Anuales: ");
+        jLabel3.setText("Salario");
 
-        cmbFacturacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
-        cmbFacturacion.addActionListener(this::cmbFacturacionActionPerformed);
-
-        jLabel6.setText("Realiza Facturación Electronica");
+        jLabel6.setText("Nit Empresa");
 
         jLabel1.setText("Ingrese los datos de la empresa");
 
@@ -71,26 +70,34 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIngresos))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jButton1)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel6))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                            .addComponent(txtNitEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(19, 19, 19)
+                                            .addComponent(txtSalario))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(33, 33, 33)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtNombre)
+                                        .addComponent(txtDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +107,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -108,11 +115,11 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cmbFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNitEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -121,22 +128,16 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFacturacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbFacturacionActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int nit = Integer.parseInt(txtNit.getText());
+        int id = Integer.parseInt(txtDocumento.getText());
         String nombre = txtNombre.getText();
-        double ingresos = Double.parseDouble(txtIngresos.getText());
-        
-        String opcion = (String) cmbFacturacion.getSelectedItem();
-        boolean facturacion = opcion.equals("Si");
+        double salario = Double.parseDouble(txtSalario.getText());
+        int nit = Integer.parseInt(txtNitEmpresa.getText());
         String estado = "Activo";
         
-        Empresa nueva = new Empresa (nit,nombre,ingresos,facturacion,estado);
+        Empleado nuevo = new Empleado (id,nit,nombre,salario,estado);
         
-        boolean res = ServicioEmpresa.guardarEmpresa(nueva);
+        boolean res = ServicioEmpleado.guardarEmpleado(nuevo);
         
         if (res){
             JOptionPane.showInternalMessageDialog(null, "Empresa agregada exitosamente");
@@ -171,15 +172,15 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbFacturacion;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txtIngresos;
-    private javax.swing.JTextField txtNit;
+    private javax.swing.JTextField txtDocumento;
+    private javax.swing.JTextField txtNitEmpresa;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }
