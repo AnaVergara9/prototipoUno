@@ -123,7 +123,7 @@ public class ServicioEmpresa {
         String nombre;
         double ingresos;
         boolean facElec;
-        String estado = "activo";
+        String estado;
         int contador = 0;
         
         try {
