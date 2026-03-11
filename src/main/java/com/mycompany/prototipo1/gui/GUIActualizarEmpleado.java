@@ -142,11 +142,11 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
         int id = Integer.parseInt(txtActualizarID.getText());
         String nombre = txtActualizarNombre.getText();
         double salario = Double.parseDouble(txtActualizarSalario.getText());
+        int nit = Integer.parseInt(txtActualizarNitEmp.getText());
         
-        facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
-        Empresa empresa = new Empresa(nit, nombre, ingresosAnuales, facturacion, "Activo");
+        Empleado empleado = new Empleado(id, nit, nombre, salario, "Activo");
         
-        res = ServicioEmpresa.actualizarEmpresa(empresa);
+        res = ServicioEmpleado.actualizarEmpleado(empleado);
         
         if (res){
             JOptionPane.showMessageDialog(null, "Empresa actualizada");
