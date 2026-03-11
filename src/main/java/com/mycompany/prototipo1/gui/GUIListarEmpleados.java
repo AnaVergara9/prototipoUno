@@ -4,6 +4,7 @@
  */
 package com.mycompany.prototipo1.gui;
 
+import com.mycompany.prototipo1.model.Empleado;
 import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpresa;
 import java.util.List;
@@ -36,7 +37,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
         btnListarTodo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblEmpresas = new javax.swing.JTable();
+        tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Empresas");
@@ -44,16 +45,16 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
 
-        tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -67,7 +68,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblEmpresas);
+        jScrollPane1.setViewportView(tblEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,12 +99,12 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
     private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        List <Empresa> empresas = ServicioEmpresa.obtenerEmpresas();
-        DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+        List <Empleado> empleados = ServicioEmpresa.obtenerEmpresas();
+        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
-        for(Empresa e : empresas){
+        for(Empleado e : empleados){
              if (e.getEstado().equals("Activo")){
-                model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado()});
+                model.addRow(new Object[]{e.getIdEmpleado(),e.getNitEmpresa(),e.getNombre(),e.getSalario(),e.getEstado()});
             }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed
@@ -136,6 +137,6 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListarTodo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEmpresas;
+    private javax.swing.JTable tblEmpleados;
     // End of variables declaration//GEN-END:variables
 }

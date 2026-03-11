@@ -39,7 +39,7 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         txtActualizarID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        btnBusActualizar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         txtActualizarNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtActualizarSalario = new javax.swing.JTextField();
@@ -55,8 +55,8 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel4.setText("ID:");
 
-        btnBusActualizar.setText("Buscar");
-        btnBusActualizar.addActionListener(this::btnBusActualizarActionPerformed);
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         jLabel5.setText("Nombre: ");
 
@@ -85,7 +85,7 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnBusActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -100,7 +100,7 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBusActualizar))
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtActualizarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,31 +121,28 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBusActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActualizarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int id = Integer.parseInt(txtActualizarID.getText());
         Empleado empleado = ServicioEmpleado.buscarEmpleado(id);
 
         if (empleado != null) {
+            txtActualizarNitEmp.setText(String.valueOf(empleado.getNitEmpresa()));
             txtActualizarNombre.setText(empleado.getNombre().trim());
             txtActualizarSalario.setText(String.valueOf(empleado.getIdEmpleado()).trim());
-            txtActualizarNitEmp.setText(Integer.parseInt());
         } else {
             JOptionPane.showMessageDialog(null, "No se encontró la empresa");
         }
         
-    }//GEN-LAST:event_btnBusActualizarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        int nit;
-        String nombre;
-        double ingresosAnuales;
-        boolean facturacion;
         boolean res; 
         
-        nit = Integer.parseInt(txtActualizarID.getText());
-        nombre = txtActualizarNombre.getText();
-        ingresosAnuales = Double.parseDouble(txtActualizarSalario.getText());
+        int id = Integer.parseInt(txtActualizarID.getText());
+        String nombre = txtActualizarNombre.getText();
+        double salario = Double.parseDouble(txtActualizarSalario.getText());
+        
         facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
         Empresa empresa = new Empresa(nit, nombre, ingresosAnuales, facturacion, "Activo");
         
@@ -185,7 +182,7 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBusActualizar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
