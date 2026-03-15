@@ -53,9 +53,9 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre: ");
 
-        jLabel3.setText("Salario");
+        jLabel3.setText("Salario:");
 
-        jLabel6.setText("Nit Empresa");
+        jLabel6.setText("Nit Empresa:");
 
         jLabel1.setText("Ingrese los datos de la empresa");
 
@@ -67,37 +67,31 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombre))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnGuardar)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel6))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                                            .addComponent(txtNitEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(19, 19, 19)
-                                            .addComponent(txtSalario))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addGap(18, 18, 18))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addGap(33, 33, 33)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtNombre)
-                                        .addComponent(txtDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtNitEmpresa))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jLabel1))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,10 +123,31 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        int id = Integer.parseInt(txtDocumento.getText());
-        int nit = Integer.parseInt(txtNitEmpresa.getText());
+         //Valida que no esten vacios los campos
+        if (txtDocumento.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtSalario.getText().trim().isEmpty() || txtNitEmpresa.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar todos los Datos");
+            return;
+        }
+        //Valida que los valores ingresados sean numericos
+        int id;
+        int nit;
+        double salario;
+        try{
+            id = Integer.parseInt(txtDocumento.getText());
+            nit = Integer.parseInt(txtNitEmpresa.getText());
+            salario = Double.parseDouble(txtSalario.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            return;
+        }
+        
+        //Validar que los valores ingresados no sean negativos
+        if (id < 0 || nit < 0 || salario < 0){
+            JOptionPane.showMessageDialog(this,"No se pueden ingresar valores negativos");
+            return;
+        }
+        
         String nombre = txtNombre.getText();
-        double salario = Double.parseDouble(txtSalario.getText());
         String estado = "Activo";
         
         Empleado nuevo = new Empleado (id,nit,nombre,salario,estado);

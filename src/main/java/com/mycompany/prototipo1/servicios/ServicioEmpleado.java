@@ -31,14 +31,17 @@ public class ServicioEmpleado {
    }
     
     public static boolean guardarEmpleado (Empleado empleado){
-        Empresa res = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
-        Empleado buscado = buscarEmpleado(empleado.getIdEmpleado());
         
-        if (res == null){
+        Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
+        
+        //Valida que no exista el ID
+        if (empleadobuscado != null){
             return false;
         }
         
-        if (buscado != null){
+        //Valida que exista la empresa y este activa
+        if (empresa == null || !empresa.getEstado().equals("Activo")){
             return false;
         }
         
