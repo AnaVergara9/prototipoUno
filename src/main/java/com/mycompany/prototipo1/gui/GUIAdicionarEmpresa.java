@@ -42,7 +42,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
         cmbFacturacion = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Empresa");
@@ -60,8 +60,8 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
 
         jLabel1.setText("Ingrese los datos de la empresa");
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,7 +89,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jButton1)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -114,7 +114,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(cmbFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnGuardar)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -125,11 +125,31 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFacturacionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int nit = Integer.parseInt(txtNit.getText());
-        String nombre = txtNombre.getText();
-        double ingresos = Double.parseDouble(txtIngresos.getText());
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //Valida que no esten vacios los campos
+        if (txtNit.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtIngresos.getText().trim().isEmpty() || cmbFacturacion.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(this,"Debe ingresar todos los Datos");
+            return;
+        }
         
+        //Valida que los valores ingresados sean numericos
+        int nit;
+        double ingresos;
+        try{
+            nit = Integer.parseInt(txtNit.getText().trim());
+            ingresos = Double.parseDouble(txtIngresos.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            return;
+        }
+        
+        //Validar que los valores ingresados no sean negativos
+        if (nit < 0 || ingresos < 0){
+            JOptionPane.showMessageDialog(this,"No se pueden ingresar valores negativos");
+            return;
+        }
+        
+        String nombre = txtNombre.getText();
         String opcion = (String) cmbFacturacion.getSelectedItem();
         boolean facturacion = opcion.equals("Si");
         String estado = "Activo";
@@ -143,7 +163,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
         }else{
             JOptionPane.showInternalMessageDialog(null, "Error al agregar la empresa");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,8 +191,8 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbFacturacion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

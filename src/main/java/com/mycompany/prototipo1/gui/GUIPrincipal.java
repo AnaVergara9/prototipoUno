@@ -42,19 +42,19 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        menuAdicionar = new javax.swing.JMenuItem();
-        menuBuscar = new javax.swing.JMenuItem();
-        menuActualizar = new javax.swing.JMenuItem();
-        menuEliminar = new javax.swing.JMenuItem();
-        menuListar = new javax.swing.JMenuItem();
-        menuSumatoria = new javax.swing.JMenuItem();
+        menuAdicionarEmpresa = new javax.swing.JMenuItem();
+        menuBuscarEmpresa = new javax.swing.JMenuItem();
+        menuActualizarEmpresa = new javax.swing.JMenuItem();
+        menuEliminarEmpresa = new javax.swing.JMenuItem();
+        menuListarEmpresa = new javax.swing.JMenuItem();
+        menuSumatoriaEmpresa = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        menuAdicionarEmpleado = new javax.swing.JMenuItem();
+        menuBuscarEmpleado = new javax.swing.JMenuItem();
+        menuActualizarEmpleado = new javax.swing.JMenuItem();
+        menuElimiarEmpresa = new javax.swing.JMenuItem();
+        menuListarEmpleados = new javax.swing.JMenuItem();
+        menuSumatoriaEmpleado = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuDesarrolladores = new javax.swing.JMenuItem();
 
@@ -82,53 +82,57 @@ public class GUIPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Empresa");
 
-        menuAdicionar.setText("Adicionar Empresa");
-        menuAdicionar.addActionListener(this::menuAdicionarActionPerformed);
-        jMenu3.add(menuAdicionar);
+        menuAdicionarEmpresa.setText("Adicionar Empresa");
+        menuAdicionarEmpresa.addActionListener(this::menuAdicionarEmpresaActionPerformed);
+        jMenu3.add(menuAdicionarEmpresa);
 
-        menuBuscar.setText("Buscar Empresa");
-        menuBuscar.addActionListener(this::menuBuscarActionPerformed);
-        jMenu3.add(menuBuscar);
+        menuBuscarEmpresa.setText("Buscar Empresa");
+        menuBuscarEmpresa.addActionListener(this::menuBuscarEmpresaActionPerformed);
+        jMenu3.add(menuBuscarEmpresa);
 
-        menuActualizar.setText("ActualizarEmpresa");
-        menuActualizar.addActionListener(this::menuActualizarActionPerformed);
-        jMenu3.add(menuActualizar);
+        menuActualizarEmpresa.setText("ActualizarEmpresa");
+        menuActualizarEmpresa.addActionListener(this::menuActualizarEmpresaActionPerformed);
+        jMenu3.add(menuActualizarEmpresa);
 
-        menuEliminar.setText("Eliminar Empresa");
-        menuEliminar.addActionListener(this::menuEliminarActionPerformed);
-        jMenu3.add(menuEliminar);
+        menuEliminarEmpresa.setText("Eliminar Empresa");
+        menuEliminarEmpresa.addActionListener(this::menuEliminarEmpresaActionPerformed);
+        jMenu3.add(menuEliminarEmpresa);
 
-        menuListar.setText("Listar Empresa");
-        menuListar.addActionListener(this::menuListarActionPerformed);
-        jMenu3.add(menuListar);
+        menuListarEmpresa.setText("Listar Empresa");
+        menuListarEmpresa.addActionListener(this::menuListarEmpresaActionPerformed);
+        jMenu3.add(menuListarEmpresa);
 
-        menuSumatoria.setText("Sumatoria");
-        menuSumatoria.addActionListener(this::menuSumatoriaActionPerformed);
-        jMenu3.add(menuSumatoria);
+        menuSumatoriaEmpresa.setText("Sumatoria");
+        menuSumatoriaEmpresa.addActionListener(this::menuSumatoriaEmpresaActionPerformed);
+        jMenu3.add(menuSumatoriaEmpresa);
 
         jMenuBar1.add(jMenu3);
 
         jMenu7.setText("Empleado");
 
-        jMenuItem1.setText("Adicionar Empleado");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMenu7.add(jMenuItem1);
+        menuAdicionarEmpleado.setText("Adicionar Empleado");
+        menuAdicionarEmpleado.addActionListener(this::menuAdicionarEmpleadoActionPerformed);
+        jMenu7.add(menuAdicionarEmpleado);
 
-        jMenuItem5.setText("Buscar Empleado");
-        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
-        jMenu7.add(jMenuItem5);
+        menuBuscarEmpleado.setText("Buscar Empleado");
+        menuBuscarEmpleado.addActionListener(this::menuBuscarEmpleadoActionPerformed);
+        jMenu7.add(menuBuscarEmpleado);
 
-        jMenuItem7.setText("Actualizar Empleado");
-        jMenu7.add(jMenuItem7);
+        menuActualizarEmpleado.setText("Actualizar Empleado");
+        menuActualizarEmpleado.addActionListener(this::menuActualizarEmpleadoActionPerformed);
+        jMenu7.add(menuActualizarEmpleado);
 
-        jMenuItem8.setText("Eliminar  Empleado");
-        jMenu7.add(jMenuItem8);
+        menuElimiarEmpresa.setText("Eliminar  Empleado");
+        menuElimiarEmpresa.addActionListener(this::menuElimiarEmpresaActionPerformed);
+        jMenu7.add(menuElimiarEmpresa);
 
-        jMenuItem9.setText("Listar Empleados");
-        jMenu7.add(jMenuItem9);
+        menuListarEmpleados.setText("Listar Empleados");
+        menuListarEmpleados.addActionListener(this::menuListarEmpleadosActionPerformed);
+        jMenu7.add(menuListarEmpleados);
 
-        jMenuItem10.setText("Sumatoria");
-        jMenu7.add(jMenuItem10);
+        menuSumatoriaEmpleado.setText("Sumatoria");
+        menuSumatoriaEmpleado.addActionListener(this::menuSumatoriaEmpleadoActionPerformed);
+        jMenu7.add(menuSumatoriaEmpleado);
 
         jMenuBar1.add(jMenu7);
 
@@ -164,43 +168,65 @@ public class GUIPrincipal extends javax.swing.JFrame {
         JOptionPane.showInternalMessageDialog(null, mensaje);
     }//GEN-LAST:event_menuDesarrolladoresActionPerformed
 
-    private void menuAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdicionarActionPerformed
+    private void menuAdicionarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdicionarEmpresaActionPerformed
         GUIAdicionarEmpresa gui = new GUIAdicionarEmpresa();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuAdicionarActionPerformed
+    }//GEN-LAST:event_menuAdicionarEmpresaActionPerformed
 
-    private void menuBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBuscarActionPerformed
+    private void menuBuscarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBuscarEmpresaActionPerformed
         GUIBuscarEmpresa gui = new GUIBuscarEmpresa();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuBuscarActionPerformed
+    }//GEN-LAST:event_menuBuscarEmpresaActionPerformed
 
-    private void menuActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActualizarActionPerformed
+    private void menuActualizarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActualizarEmpresaActionPerformed
         GUIActualizarEmpresa gui = new GUIActualizarEmpresa();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuActualizarActionPerformed
+    }//GEN-LAST:event_menuActualizarEmpresaActionPerformed
 
-    private void menuEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEliminarActionPerformed
+    private void menuEliminarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEliminarEmpresaActionPerformed
         GUIEliminarEmpresa gui = new GUIEliminarEmpresa();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuEliminarActionPerformed
+    }//GEN-LAST:event_menuEliminarEmpresaActionPerformed
 
-    private void menuListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarActionPerformed
+    private void menuListarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarEmpresaActionPerformed
         GUIListarEmpresas gui = new GUIListarEmpresas();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuListarActionPerformed
+    }//GEN-LAST:event_menuListarEmpresaActionPerformed
 
-    private void menuSumatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSumatoriaActionPerformed
+    private void menuSumatoriaEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSumatoriaEmpresaActionPerformed
         GUISumatoriaIngresos gui = new GUISumatoriaIngresos();
         gui.setVisible(true);
-    }//GEN-LAST:event_menuSumatoriaActionPerformed
+    }//GEN-LAST:event_menuSumatoriaEmpresaActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void menuBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBuscarEmpleadoActionPerformed
+        GUIBuscarEmpleado gui = new GUIBuscarEmpleado();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuBuscarEmpleadoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuAdicionarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdicionarEmpleadoActionPerformed
+        GUIAdicionarEmpleado gui = new GUIAdicionarEmpleado();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuAdicionarEmpleadoActionPerformed
+
+    private void menuActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActualizarEmpleadoActionPerformed
+        GUIActualizarEmpleado gui = new GUIActualizarEmpleado();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuActualizarEmpleadoActionPerformed
+
+    private void menuElimiarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuElimiarEmpresaActionPerformed
+        GUIEliminarEmpleado gui = new GUIEliminarEmpleado();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuElimiarEmpresaActionPerformed
+
+    private void menuListarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarEmpleadosActionPerformed
+        GUIListarEmpleados gui = new GUIListarEmpleados();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuListarEmpleadosActionPerformed
+
+    private void menuSumatoriaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSumatoriaEmpleadoActionPerformed
+        GUISumatoriaSalarios gui = new GUISumatoriaSalarios();
+        gui.setVisible(true);
+    }//GEN-LAST:event_menuSumatoriaEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,22 +263,22 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JMenuItem menuActualizar;
-    private javax.swing.JMenuItem menuAdicionar;
-    private javax.swing.JMenuItem menuBuscar;
+    private javax.swing.JMenuItem menuActualizarEmpleado;
+    private javax.swing.JMenuItem menuActualizarEmpresa;
+    private javax.swing.JMenuItem menuAdicionarEmpleado;
+    private javax.swing.JMenuItem menuAdicionarEmpresa;
+    private javax.swing.JMenuItem menuBuscarEmpleado;
+    private javax.swing.JMenuItem menuBuscarEmpresa;
     private javax.swing.JMenuItem menuDesarrolladores;
-    private javax.swing.JMenuItem menuEliminar;
-    private javax.swing.JMenuItem menuListar;
-    private javax.swing.JMenuItem menuSumatoria;
+    private javax.swing.JMenuItem menuElimiarEmpresa;
+    private javax.swing.JMenuItem menuEliminarEmpresa;
+    private javax.swing.JMenuItem menuListarEmpleados;
+    private javax.swing.JMenuItem menuListarEmpresa;
+    private javax.swing.JMenuItem menuSumatoriaEmpleado;
+    private javax.swing.JMenuItem menuSumatoriaEmpresa;
     // End of variables declaration//GEN-END:variables
 }

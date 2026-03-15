@@ -31,6 +31,16 @@ public class ServicioEmpresa {
    }
     
     public static boolean guardarEmpresa (Empresa empresa){
+        //Valida que no exista la empresa
+        if (buscarEmpresa(empresa.getNit())!=null){
+            return false;
+        }
+        
+        //Valida que otra empresa no se llame igual
+        if (buscarEmpresaPorNombre(empresa.getNombre())!=null){
+            return false;
+        }
+        
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(file.length());
@@ -193,7 +203,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -219,7 +229,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -236,4 +246,28 @@ public class ServicioEmpresa {
         }
         return 0;
     }
+
+    private static Empresa buscarEmpresaPorNombre(String nombreBuscado) {
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
+            file.seek(0);
+            while (file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF().trim();
+                double ingresos = file.readDouble();
+                boolean facturacion = file.readBoolean();
+                String estado = file.readUTF().trim();
+                if (nombre == nombreBuscado &  estado.equals("Activo")){
+                    Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
+                    return empresaBuscada;
+                }
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }  
+        return null;
+    }
+        
 }

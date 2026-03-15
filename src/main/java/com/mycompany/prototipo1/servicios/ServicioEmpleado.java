@@ -5,6 +5,7 @@
 package com.mycompany.prototipo1.servicios;
 
 import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -30,8 +31,12 @@ public class ServicioEmpleado {
    }
     
     public static boolean guardarEmpleado (Empleado empleado){
-        
+        Empresa res = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
         Empleado buscado = buscarEmpleado(empleado.getIdEmpleado());
+        
+        if (res == null){
+            return false;
+        }
         
         if (buscado != null){
             return false;

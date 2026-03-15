@@ -43,7 +43,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         txtSalario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         txtNitEmpresa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -59,8 +59,8 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
 
         jLabel1.setText("Ingrese los datos de la empresa");
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,7 +73,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(btnGuardar)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,18 +121,18 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtNitEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnGuardar)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         int id = Integer.parseInt(txtDocumento.getText());
+        int nit = Integer.parseInt(txtNitEmpresa.getText());
         String nombre = txtNombre.getText();
         double salario = Double.parseDouble(txtSalario.getText());
-        int nit = Integer.parseInt(txtNitEmpresa.getText());
         String estado = "Activo";
         
         Empleado nuevo = new Empleado (id,nit,nombre,salario,estado);
@@ -140,11 +140,11 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         boolean res = ServicioEmpleado.guardarEmpleado(nuevo);
         
         if (res){
-            JOptionPane.showInternalMessageDialog(null, "Empresa agregada exitosamente");
+            JOptionPane.showInternalMessageDialog(null, "Empleado agregada exitosamente");
         }else{
-            JOptionPane.showInternalMessageDialog(null, "Error al agregar la empresa");
+            JOptionPane.showInternalMessageDialog(null, "Error al agregar la empleado");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,7 +172,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
