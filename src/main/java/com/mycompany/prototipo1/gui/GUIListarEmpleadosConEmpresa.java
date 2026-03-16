@@ -5,7 +5,9 @@
 package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpleado;
+import com.mycompany.prototipo1.servicios.ServicioEmpresa;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,14 +15,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author anaso
  */
-public class GUIListarEmpleados extends javax.swing.JFrame {
+public class GUIListarEmpleadosConEmpresa extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarEmpleados.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarEmpleadosConEmpresa.class.getName());
 
     /**
      * Creates new form GUIListarEmpresas
      */
-    public GUIListarEmpleados() {
+    public GUIListarEmpleadosConEmpresa() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -39,8 +41,8 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listar Empleados");
-        setName("Listar Empleados"); // NOI18N
+        setTitle("Listar Empleados con Empresa");
+        setName("Listar Empleados con Empresa"); // NOI18N
 
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
@@ -50,7 +52,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Nombre Empresa"
             }
         ) {
             Class[] types = new Class [] {
@@ -104,7 +106,10 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         model.setRowCount(0);
         for(Empleado e : empleados){
              if (e.getEstado().equals("Activo")){
-                model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(),e.getEstado()});
+                 Empresa emp = ServicioEmpresa.buscarEmpresa(e.getNitEmpresa());
+                 if (emp != null){
+                     model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(), emp.getNombre()});
+                 }
             }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed
@@ -131,7 +136,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIListarEmpleados().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIListarEmpleadosConEmpresa().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

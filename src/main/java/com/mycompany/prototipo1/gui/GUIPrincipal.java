@@ -55,6 +55,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         menuElimiarEmpresa = new javax.swing.JMenuItem();
         menuListarEmpleados = new javax.swing.JMenuItem();
         menuSumatoriaEmpleado = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuDesarrolladores = new javax.swing.JMenuItem();
 
@@ -123,7 +124,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         menuActualizarEmpleado.addActionListener(this::menuActualizarEmpleadoActionPerformed);
         jMenu7.add(menuActualizarEmpleado);
 
-        menuElimiarEmpresa.setText("Eliminar  Empleado");
+        menuElimiarEmpresa.setText("Eliminar Empleado");
         menuElimiarEmpresa.addActionListener(this::menuElimiarEmpresaActionPerformed);
         jMenu7.add(menuElimiarEmpresa);
 
@@ -134,6 +135,10 @@ public class GUIPrincipal extends javax.swing.JFrame {
         menuSumatoriaEmpleado.setText("Sumatoria");
         menuSumatoriaEmpleado.addActionListener(this::menuSumatoriaEmpleadoActionPerformed);
         jMenu7.add(menuSumatoriaEmpleado);
+
+        jMenuItem1.setText("Listar Empleado con Empresa");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenu7.add(jMenuItem1);
 
         jMenuBar1.add(jMenu7);
 
@@ -229,6 +234,11 @@ public class GUIPrincipal extends javax.swing.JFrame {
         gui.setVisible(true);
     }//GEN-LAST:event_menuSumatoriaEmpleadoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        GUIListarEmpleadosConEmpresa gui = new GUIListarEmpleadosConEmpresa();
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +274,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

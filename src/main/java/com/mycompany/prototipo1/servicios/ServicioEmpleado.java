@@ -192,7 +192,7 @@ public class ServicioEmpleado {
         return -1;
     }
     
-    public static List obtenerEmpleado(){
+    public static List obtenerEmpleados(){
         List <Empleado> empleados = new ArrayList();
         Empleado emp = null;
         

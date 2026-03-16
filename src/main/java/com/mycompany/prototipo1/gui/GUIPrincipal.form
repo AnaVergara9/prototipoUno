@@ -142,7 +142,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuElimiarEmpresa">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar  Empleado"/>
+                <Property name="text" type="java.lang.String" value="Eliminar Empleado"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuElimiarEmpresaActionPerformed"/>
@@ -162,6 +162,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuSumatoriaEmpleadoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Listar Empleado con Empresa"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
