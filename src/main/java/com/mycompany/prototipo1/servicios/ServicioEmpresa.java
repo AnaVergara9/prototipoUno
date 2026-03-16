@@ -64,7 +64,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facturacion = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -100,6 +100,12 @@ public class ServicioEmpresa {
     }
     
     public static boolean actualizarEmpresa (Empresa empresa){
+        Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(empresa.getNit());
+        
+        //Valida que exista la empresa y este activa
+        if (empresaBuscada == null || !empresa.getEstado().equals("Activo")){
+            return false;
+        }
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             
@@ -129,23 +135,19 @@ public class ServicioEmpresa {
     }
     
     public static int contarRegistros(int pNit){
-        int nit;
-        String nombre;
-        double ingresos;
-        boolean facElec;
-        String estado = "activo";
         int contador = 0;
         
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
             //Se posiciona al inicio del archivo
             file.seek(0);
             while(file.getFilePointer() < file.length()){
-                nit = file.readInt();
-                nombre = file.readUTF();
-                ingresos = file.readDouble();
-                facElec = file.readBoolean();
-                estado = file.readUTF();
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facElec = file.readBoolean();
+                String estado = file.readUTF();
                 contador ++;
                 
                 if (nit == pNit){
@@ -153,12 +155,10 @@ public class ServicioEmpresa {
                     return contador;
                 }
             }
-            file.close();
-            
+            file.close();  
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-
         return -1;
     }
     

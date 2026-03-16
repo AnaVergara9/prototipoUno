@@ -4,8 +4,8 @@
  */
 package com.mycompany.prototipo1.gui;
 
-import com.mycompany.prototipo1.model.Empresa;
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,32 +37,32 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtNit = new javax.swing.JTextField();
+        txtDocumento = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblEmpresas = new javax.swing.JTable();
+        tblEmpleados = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Empresa");
 
-        jLabel2.setText("Ingrese el NIT de la empresa que desea eliminar:");
+        jLabel2.setText("Ingrese el documento del empleado que desea eliminar:");
 
-        jLabel1.setText("NIT: ");
+        jLabel1.setText("Documento:");
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -76,7 +76,7 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblEmpresas);
+        jScrollPane1.setViewportView(tblEmpleados);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
@@ -90,19 +90,19 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addContainerGap(404, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnBuscar)
-                                .addGap(192, 192, 192)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnEliminar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 20, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +112,7 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar)
                     .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
@@ -124,40 +124,59 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         try {
+         //Valida que se haya buscado
+        if (txtDocumento.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Primero debe buscar el empleado");
+            return;
+        }
+        
+        try {
             int opcion = JOptionPane.showConfirmDialog(
             this,
-            "<html><center><b>¿Seguro desea eliminar esta empresa?</b></center></html>",
+            "<html><center><b>¿Seguro desea eliminar este empleado?</b></center></html>",
             "CONFIRMAR",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
             );
             
             if (opcion == JOptionPane.YES_OPTION){
-                
-                boolean res;
-                int pNit =Integer.parseInt(txtNit.getText());
-                res = ServicioEmpresa.eliminarEmpresa(pNit);
+                int pId =Integer.parseInt(txtDocumento.getText());
+                boolean res = ServicioEmpleado.eliminarEmpleado(pId);
             
                 if(res) {
-                    JOptionPane.showMessageDialog(this, "Empresa eliminada correctamente!");                    
+                    JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente!");                    
                 }
             }
         } catch (IOException ex) {
             System.getLogger(GUIEliminarEmpleado.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Error al eliminar Empresa!"); 
+            JOptionPane.showMessageDialog(this, "Error al eliminar Empleado!"); 
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int pNit =Integer.parseInt(txtNit.getText());
-        Empresa emp = ServicioEmpresa.buscarEmpresa(pNit);
+        //Valida que ID no este vacio
+        if (txtDocumento.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un N° de documento");
+            return;
+        }
+        
+        //Valida que el ID ingresado sea numericos
+        int pId;
+        try{
+            pId =Integer.parseInt(txtDocumento.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El documento debe ser numérico");
+            return;
+        }
+        
+        Empleado emp = ServicioEmpleado.buscarEmpleado(pId);
+        
         if (emp != null){
-           DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
+           DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado()}); 
+        model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNombre(),emp.getSalario(),emp.getNitEmpresa(),emp.getEstado()}); 
         }else{
-            JOptionPane.showMessageDialog(this, "Empresa no encontrada");
+            JOptionPane.showMessageDialog(this, "Empleado no encontrado");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -192,7 +211,7 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEmpresas;
-    private javax.swing.JTextField txtNit;
+    private javax.swing.JTable tblEmpleados;
+    private javax.swing.JTextField txtDocumento;
     // End of variables declaration//GEN-END:variables
 }

@@ -181,7 +181,8 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
         
         String nombre = txtActualizarNombre.getText();
         boolean facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
-        Empresa empresa = new Empresa(nit, nombre, ingresos, facturacion, "Activo");
+        String estado = "Activo";
+        Empresa empresa = new Empresa(nit, nombre, ingresos, facturacion, estado);
         
         boolean res = ServicioEmpresa.actualizarEmpresa(empresa);
         

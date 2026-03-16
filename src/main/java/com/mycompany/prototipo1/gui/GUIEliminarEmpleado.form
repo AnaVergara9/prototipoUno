@@ -29,22 +29,22 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="404" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtNit" min="-2" pref="242" max="-2" attributes="0"/>
+                              <Component id="txtDocumento" min="-2" pref="242" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane1" min="-2" pref="631" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -58,7 +58,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDocumento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -72,15 +72,15 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingrese el NIT de la empresa que desea eliminar:"/>
+        <Property name="text" type="java.lang.String" value="Ingrese el documento del empleado que desea eliminar:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="NIT: "/>
+        <Property name="text" type="java.lang.String" value="Documento:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNit">
+    <Component class="javax.swing.JTextField" name="txtDocumento">
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
@@ -97,14 +97,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblEmpresas">
+        <Component class="javax.swing.JTable" name="tblEmpleados">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="false" title="NIT" type="java.lang.Integer"/>
+                <Column editable="false" title="Documento" type="java.lang.Integer"/>
                 <Column editable="false" title="Nombre" type="java.lang.String"/>
-                <Column editable="false" title="Ingresos" type="java.lang.Double"/>
-                <Column editable="false" title="Fac. Electr&#xf3;nica" type="java.lang.Boolean"/>
+                <Column editable="false" title="Salario" type="java.lang.Double"/>
+                <Column editable="false" title="Nit Empresa" type="java.lang.Integer"/>
                 <Column editable="false" title="Estado" type="java.lang.String"/>
               </Table>
             </Property>

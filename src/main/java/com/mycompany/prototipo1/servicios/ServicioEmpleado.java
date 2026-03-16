@@ -69,7 +69,7 @@ public class ServicioEmpleado {
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
                 if (nit == idBuscado &  estado.equals("Activo")){
@@ -104,6 +104,14 @@ public class ServicioEmpleado {
     }
     
     public static boolean actualizarEmpleado (Empleado empleado){
+        Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
+        
+        //Valida que exista el empleado - empleado y empresa activos
+        if (empleadobuscado == null || !empleadobuscado.getEstado().equals("Activo") || !empresa.getEstado().equals("Activo")){
+            return false;
+        }
+        
         try {
             RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             

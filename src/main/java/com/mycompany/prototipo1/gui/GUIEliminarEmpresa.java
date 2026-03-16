@@ -124,7 +124,13 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         try {
+          //Valida que se haya buscado
+        if (txtNit.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Primero debe buscar la empresa");
+            return;
+        }
+        
+        try {
             int opcion = JOptionPane.showConfirmDialog(
             this,
             "<html><center><b>¿Seguro desea eliminar esta empresa?</b></center></html>",
@@ -134,10 +140,8 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
             );
             
             if (opcion == JOptionPane.YES_OPTION){
-                
-                boolean res;
                 int pNit =Integer.parseInt(txtNit.getText());
-                res = ServicioEmpresa.eliminarEmpresa(pNit);
+                boolean res = ServicioEmpresa.eliminarEmpresa(pNit);
             
                 if(res) {
                     JOptionPane.showMessageDialog(this, "Empresa eliminada correctamente!");                    
@@ -150,7 +154,21 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int pNit =Integer.parseInt(txtNit.getText());
+        //Valida que NIT no este vacio
+        if (txtNit.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un NIT");
+            return;
+        }
+        
+        //Valida que el NIT ingresado sea numericos
+        int pNit;
+        try{
+            pNit =Integer.parseInt(txtNit.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT debe ser numérico");
+            return;
+        }
+        
         Empresa emp = ServicioEmpresa.buscarEmpresa(pNit);
         if (emp != null){
            DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
