@@ -39,6 +39,7 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sumatoria Ingresos Anuales");
+        setName("Sumatoria Ingresos Anuales"); // NOI18N
 
         btSumatoria.setText("Calcular Sumatoria");
         btSumatoria.addActionListener(this::btSumatoriaActionPerformed);
@@ -65,7 +66,7 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSumatoria))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGap(130, 130, 130)
                         .addComponent(btSumatoria)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -80,9 +81,9 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtSumatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addGap(34, 34, 34)
                 .addComponent(btSumatoria)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();

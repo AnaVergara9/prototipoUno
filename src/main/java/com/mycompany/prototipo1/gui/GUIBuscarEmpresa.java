@@ -43,6 +43,7 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Empresa");
+        setName("Buscar Empresa"); // NOI18N
 
         jLabel1.setText("NIT: ");
 

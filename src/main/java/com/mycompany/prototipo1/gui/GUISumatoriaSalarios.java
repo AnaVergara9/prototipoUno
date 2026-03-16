@@ -4,7 +4,8 @@
  */
 package com.mycompany.prototipo1.gui;
 
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
+
 
 /**
  *
@@ -38,14 +39,15 @@ public class GUISumatoriaSalarios extends javax.swing.JFrame {
         txtRegistros = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Sumatoria Ingresos Anuales");
+        setTitle("Sumatoria Salarios");
+        setName("Sumatoria Salarios"); // NOI18N
 
         btSumatoria.setText("Calcular Sumatoria");
         btSumatoria.addActionListener(this::btSumatoriaActionPerformed);
 
-        jLabel1.setText("Total de empresas activas: ");
+        jLabel1.setText("Total de empleados activos:");
 
-        jLabel2.setText("Sumatoria de ingresos: ");
+        jLabel2.setText("Sumatoria de salarios: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +69,7 @@ public class GUISumatoriaSalarios extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addComponent(btSumatoria)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,9 +91,9 @@ public class GUISumatoriaSalarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSumatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSumatoriaActionPerformed
-        int nActivos = ServicioEmpresa.registrosActivos();
-        double sumatoriaIngresos = ServicioEmpresa.sumatoria();
-        txtSumatoria.setText(String.valueOf(sumatoriaIngresos));
+        int nActivos = ServicioEmpleado.registrosActivos();
+        double sumatoriaSalarios = ServicioEmpleado.sumatoria();
+        txtSumatoria.setText(String.valueOf(sumatoriaSalarios));
         txtRegistros.setText(String.valueOf(nActivos));
         
     }//GEN-LAST:event_btSumatoriaActionPerformed

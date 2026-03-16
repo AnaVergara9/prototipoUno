@@ -5,9 +5,7 @@
 package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empleado;
-import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpleado;
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,7 +39,8 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listar Empresas");
+        setTitle("Listar Empleados");
+        setName("Listar Empleados"); // NOI18N
 
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);

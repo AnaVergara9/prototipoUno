@@ -46,6 +46,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Empresa");
+        setName("Adicionar Empresa"); // NOI18N
 
         jLabel4.setText("NIT: ");
 

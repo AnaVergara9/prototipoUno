@@ -40,6 +40,7 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Empresas");
+        setName("Listar Empresas"); // NOI18N
 
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
@@ -49,14 +50,14 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NIT", "Nombre", "Ingresos", "Fac. Electrónica"
+                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

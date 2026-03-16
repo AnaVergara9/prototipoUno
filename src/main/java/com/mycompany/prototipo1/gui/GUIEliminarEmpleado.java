@@ -44,7 +44,8 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Eliminar Empresa");
+        setTitle("Eliminar Empleado");
+        setName("Eliminar Empleado"); // NOI18N
 
         jLabel2.setText("Ingrese el documento del empleado que desea eliminar:");
 
@@ -130,26 +131,20 @@ public class GUIEliminarEmpleado extends javax.swing.JFrame {
             return;
         }
         
-        try {
-            int opcion = JOptionPane.showConfirmDialog(
-            this,
-            "<html><center><b>¿Seguro desea eliminar este empleado?</b></center></html>",
-            "CONFIRMAR",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.WARNING_MESSAGE
-            );
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "<html><center><b>¿Seguro desea eliminar este empleado?</b></center></html>",
+                "CONFIRMAR",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (opcion == JOptionPane.YES_OPTION){
+            int pId =Integer.parseInt(txtDocumento.getText());
+            boolean res = ServicioEmpleado.eliminarEmpleado(pId);
             
-            if (opcion == JOptionPane.YES_OPTION){
-                int pId =Integer.parseInt(txtDocumento.getText());
-                boolean res = ServicioEmpleado.eliminarEmpleado(pId);
-            
-                if(res) {
-                    JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente!");                    
-                }
+            if(res) {
+                JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente!");
             }
-        } catch (IOException ex) {
-            System.getLogger(GUIEliminarEmpleado.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Error al eliminar Empleado!"); 
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 

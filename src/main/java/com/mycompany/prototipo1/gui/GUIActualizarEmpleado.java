@@ -48,7 +48,8 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Actualizar Empresa");
+        setTitle("Actualizar Empleado");
+        setName("Actualizar Empleado"); // NOI18N
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(this::btnActualizarActionPerformed);
@@ -144,7 +145,7 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
             txtActualizarSalario.setText(String.valueOf(empleado.getSalario()).trim());
             txtActualizarNitEmp.setText(String.valueOf(empleado.getNitEmpresa()));
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró la empresa");
+            JOptionPane.showMessageDialog(null, "No se encontró el empleado");
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed

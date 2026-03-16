@@ -47,7 +47,8 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         txtNitEmpresa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Adicionar Empresa");
+        setTitle("Adicionar Empleado");
+        setName("Adicionar Empleado"); // NOI18N
 
         jLabel4.setText("Documento:");
 
@@ -137,7 +138,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
             nit = Integer.parseInt(txtNitEmpresa.getText());
             salario = Double.parseDouble(txtSalario.getText());
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            JOptionPane.showMessageDialog(this,"El Documento/NIT/Salario deben ser numéricos");
             return;
         }
         

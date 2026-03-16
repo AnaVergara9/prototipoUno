@@ -42,7 +42,8 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
         tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar Empresa");
+        setTitle("Buscar Empleado");
+        setName("Buscar Empleado"); // NOI18N
 
         jLabel1.setText("Documento:");
 
@@ -133,8 +134,8 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
             JOptionPane.showInternalMessageDialog(null, "Empleado no encontrado");
         }else{
             DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
-            model.setRowCount(0);
-            model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNitEmpresa(),emp.getNombre(),emp.getSalario(),emp.getEstado() });
+        model.setRowCount(0);
+        model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNombre(),emp.getSalario(),emp.getNitEmpresa(),emp.getEstado()});
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

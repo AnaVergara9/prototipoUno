@@ -45,6 +45,7 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Empresa");
+        setName("Eliminar Empresa"); // NOI18N
 
         jLabel2.setText("Ingrese el NIT de la empresa que desea eliminar:");
 
