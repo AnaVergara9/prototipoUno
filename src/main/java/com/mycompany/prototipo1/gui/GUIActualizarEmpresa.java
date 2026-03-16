@@ -122,7 +122,21 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBusActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActualizarActionPerformed
-        int nit = Integer.parseInt(txtActualizarNit.getText());
+        //Valida que no este vacio el NIT
+        if (txtActualizarNit.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar el NIT");
+            return;
+        }
+        
+        //Valida que el nit ingresado sea numerico
+        int nit;
+        try{
+            nit = Integer.parseInt(txtActualizarNit.getText().trim());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            return;
+        }
+        
         Empresa empresa = ServicioEmpresa.buscarEmpresa(nit);
 
         if (empresa != null) {
@@ -140,20 +154,36 @@ public class GUIActualizarEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBusActualizarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+
+        //Valida que se haya buscado
+        if (txtActualizarNit.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Primero debe buscar la empresa");
+            return;
+        }
         
+        //Valida que los valores ingresados sean numericos
         int nit;
-        String nombre;
-        double ingresosAnuales;
-        boolean facturacion;
-        boolean res; 
+        double ingresos;
         
-        nit = Integer.parseInt(txtActualizarNit.getText());
-        nombre = txtActualizarNombre.getText();
-        ingresosAnuales = Double.parseDouble(txtActualizarIngresos.getText());
-        facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
-        Empresa empresa = new Empresa(nit, nombre, ingresosAnuales, facturacion, "Activo");
+        try{
+            nit = Integer.parseInt(txtActualizarNit.getText().trim());
+            ingresos = Double.parseDouble(txtActualizarIngresos.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            return;
+        }
         
-        res = ServicioEmpresa.actualizarEmpresa(empresa);
+        //Validar que los valores ingresados no sean negativos
+        if (nit < 0 || ingresos < 0){
+            JOptionPane.showMessageDialog(this,"No se pueden ingresar valores negativos");
+            return;
+        }
+        
+        String nombre = txtActualizarNombre.getText();
+        boolean facturacion = cmbActualizarFacElec.getSelectedItem().toString().equalsIgnoreCase("Si");
+        Empresa empresa = new Empresa(nit, nombre, ingresos, facturacion, "Activo");
+        
+        boolean res = ServicioEmpresa.actualizarEmpresa(empresa);
         
         if (res){
             JOptionPane.showMessageDialog(null, "Empresa actualizada");
