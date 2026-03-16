@@ -113,8 +113,22 @@ public class GUIBuscarEmpresa extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
-        Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
+        //Valida que NIT no este vacio
+        if (txtBuscarNit.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un NIT");
+            return;
+        }
+        
+        //Valida que el NIT ingresado sea numericos
+        int nit;
+        try{
+            nit = Integer.parseInt(txtBuscarNit.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT debe ser numérico");
+            return;
+        }
+        
+        Empresa emp = ServicioEmpresa.buscarEmpresa(nit);
         if (emp == null){
             JOptionPane.showInternalMessageDialog(null, "Empresa no encontrada");
         }else{

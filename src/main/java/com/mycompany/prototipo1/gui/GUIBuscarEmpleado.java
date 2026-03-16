@@ -4,8 +4,8 @@
  */
 package com.mycompany.prototipo1.gui;
 
-import com.mycompany.prototipo1.model.Empresa;
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import com.mycompany.prototipo1.model.Empleado; 
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,32 +35,32 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtBuscarNit = new javax.swing.JTextField();
+        txtBuscarID = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblEmpresas = new javax.swing.JTable();
+        tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Empresa");
 
-        jLabel1.setText("NIT: ");
+        jLabel1.setText("Documento:");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jLabel2.setText("Ingrese el NIT de la empresa:");
+        jLabel2.setText("Ingrese el N. de Documento del empleado:");
 
-        tblEmpresas.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "NIT", "Nombre", "Ingresos", "Fac. Electrónica", "Estado"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -74,7 +74,7 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblEmpresas);
+        jScrollPane1.setViewportView(tblEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,7 +87,7 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(btnBuscar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,7 +101,7 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtBuscarNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,14 +113,28 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        int nitBuscar = Integer.parseInt(txtBuscarNit.getText());
-        Empresa emp = ServicioEmpresa.buscarEmpresa(nitBuscar);
+        //Valida que ID no este vacio
+        if (txtBuscarID.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar un N° de documento");
+            return;
+        }
+        
+        //Valida que el ID ingresado sea numericos
+        int documento;
+        try{
+            documento = Integer.parseInt(txtBuscarID.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El documento debe ser numérico");
+            return;
+        }
+        
+        Empleado emp = ServicioEmpleado.buscarEmpleado(documento);
         if (emp == null){
-            JOptionPane.showInternalMessageDialog(null, "Empresa no encontrada");
+            JOptionPane.showInternalMessageDialog(null, "Empleado no encontrado");
         }else{
-            DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
-        model.setRowCount(0);
-        model.addRow(new Object[]{emp.getNit(),emp.getNombre(),emp.getIngresosAnuales(),emp.isFacturacion(),emp.getEstado() });
+            DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
+            model.setRowCount(0);
+            model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNitEmpresa(),emp.getNombre(),emp.getSalario(),emp.getEstado() });
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -154,7 +168,7 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEmpresas;
-    private javax.swing.JTextField txtBuscarNit;
+    private javax.swing.JTable tblEmpleados;
+    private javax.swing.JTextField txtBuscarID;
     // End of variables declaration//GEN-END:variables
 }

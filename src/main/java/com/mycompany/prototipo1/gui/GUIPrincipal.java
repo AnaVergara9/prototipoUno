@@ -74,7 +74,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
 
         jMenuItem6.setText("jMenuItem6");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
 
         jMenu2.setText("Inicio");
