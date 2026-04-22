@@ -63,5 +63,4 @@ public class Empresa {
         this.estado = estado;
     }
     
-    
 }
