@@ -5,8 +5,7 @@
 package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empleado;
-import com.mycompany.prototipo1.model.Empresa;
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,7 +39,8 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listar Empresas");
+        setTitle("Listar Empleados");
+        setName("Listar Empleados"); // NOI18N
 
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
@@ -50,7 +50,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Documento", "Nombre", "Salario", "Nit Empresa", "Nombre"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
             }
         ) {
             Class[] types = new Class [] {
@@ -99,12 +99,12 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
     private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        List <Empleado> empleados = ServicioEmpresa.obtenerEmpresas();
+        List <Empleado> empleados = ServicioEmpleado.obtenerEmpleados();
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
         for(Empleado e : empleados){
              if (e.getEstado().equals("Activo")){
-                model.addRow(new Object[]{e.getIdEmpleado(),e.getNitEmpresa(),e.getNombre(),e.getSalario(),e.getEstado()});
+                model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(),e.getEstado()});
             }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed

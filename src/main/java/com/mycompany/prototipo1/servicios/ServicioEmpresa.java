@@ -31,6 +31,16 @@ public class ServicioEmpresa {
    }
     
     public static boolean guardarEmpresa (Empresa empresa){
+        //Valida que no exista la empresa
+        if (buscarEmpresa(empresa.getNit())!=null){
+            return false;
+        }
+        
+        //Valida que otra empresa no se llame igual
+        if (buscarEmpresaPorNombre(empresa.getNombre())!=null){
+            return false;
+        }
+        
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(file.length());
@@ -54,7 +64,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facturacion = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -90,6 +100,12 @@ public class ServicioEmpresa {
     }
     
     public static boolean actualizarEmpresa (Empresa empresa){
+        Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(empresa.getNit());
+        
+        //Valida que exista la empresa y este activa
+        if (empresaBuscada == null || !empresa.getEstado().equals("Activo")){
+            return false;
+        }
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             
@@ -119,23 +135,27 @@ public class ServicioEmpresa {
     }
     
     public static int contarRegistros(int pNit){
+<<<<<<< HEAD
         int nit;
         String nombre;
         double ingresos;
         boolean facElec;
         String estado;
+=======
+>>>>>>> a010a51f5f34866f1a2e06bbbe5484692d1470c1
         int contador = 0;
         
         try {
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
             //Se posiciona al inicio del archivo
             file.seek(0);
             while(file.getFilePointer() < file.length()){
-                nit = file.readInt();
-                nombre = file.readUTF();
-                ingresos = file.readDouble();
-                facElec = file.readBoolean();
-                estado = file.readUTF();
+                int nit = file.readInt();
+                String nombre = file.readUTF();
+                double ingresos = file.readDouble();
+                boolean facElec = file.readBoolean();
+                String estado = file.readUTF();
                 contador ++;
                 
                 if (nit == pNit){
@@ -143,12 +163,10 @@ public class ServicioEmpresa {
                     return contador;
                 }
             }
-            file.close();
-            
+            file.close();  
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-
         return -1;
     }
     
@@ -193,7 +211,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -219,7 +237,7 @@ public class ServicioEmpresa {
             file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
@@ -236,4 +254,28 @@ public class ServicioEmpresa {
         }
         return 0;
     }
+
+    private static Empresa buscarEmpresaPorNombre(String nombreBuscado) {
+        try {
+            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            
+            file.seek(0);
+            while (file.getFilePointer() < file.length()){
+                int nit = file.readInt();
+                String nombre = file.readUTF().trim();
+                double ingresos = file.readDouble();
+                boolean facturacion = file.readBoolean();
+                String estado = file.readUTF().trim();
+                if (nombre == nombreBuscado &  estado.equals("Activo")){
+                    Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
+                    return empresaBuscada;
+                }
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }  
+        return null;
+    }
+        
 }

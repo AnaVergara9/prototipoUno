@@ -48,7 +48,8 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Actualizar Empresa");
+        setTitle("Actualizar Empleado");
+        setName("Actualizar Empleado"); // NOI18N
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(this::btnActualizarActionPerformed);
@@ -101,19 +102,19 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtActualizarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtActualizarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtActualizarNitEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(btnActualizar)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -122,34 +123,69 @@ public class GUIActualizarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int id = Integer.parseInt(txtActualizarID.getText());
+        //Valida que no este vacio el ID
+        if (txtActualizarID.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar el N° de Documento");
+            return;
+        }
+        
+        //Valida que el ID ingresado sea numerico
+        int id;
+        try{
+            id = Integer.parseInt(txtActualizarID.getText().trim());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
+            return;
+        }
+        
         Empleado empleado = ServicioEmpleado.buscarEmpleado(id);
 
         if (empleado != null) {
-            txtActualizarNitEmp.setText(String.valueOf(empleado.getNitEmpresa()));
             txtActualizarNombre.setText(empleado.getNombre().trim());
-            txtActualizarSalario.setText(String.valueOf(empleado.getIdEmpleado()).trim());
+            txtActualizarSalario.setText(String.valueOf(empleado.getSalario()).trim());
+            txtActualizarNitEmp.setText(String.valueOf(empleado.getNitEmpresa()));
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró la empresa");
+            JOptionPane.showMessageDialog(null, "No se encontró el empleado");
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        boolean res; 
+        //Valida que se haya buscado
+        if (txtActualizarID.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Primero debe buscar el empleado");
+            return;
+        }
         
-        int id = Integer.parseInt(txtActualizarID.getText());
+        //Valida que los valores ingresados sean numericos
+        int id;
+        int nit;
+        double salario;
+        
+        try{
+            id = Integer.parseInt(txtActualizarID.getText());
+            nit = Integer.parseInt(txtActualizarNitEmp.getText());
+            salario = Double.parseDouble(txtActualizarSalario.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"El Id/NIT/Salario deben ser numéricos");
+            return;
+        }
+        
+        //Validar que los valores ingresados no sean negativos
+        if (nit < 0 || salario < 0 || id<0){
+            JOptionPane.showMessageDialog(this,"No se pueden ingresar valores negativos");
+            return;
+        }
+        
         String nombre = txtActualizarNombre.getText();
-        double salario = Double.parseDouble(txtActualizarSalario.getText());
-        int nit = Integer.parseInt(txtActualizarNitEmp.getText());
         
         Empleado empleado = new Empleado(id, nit, nombre, salario, "Activo");
         
-        res = ServicioEmpleado.actualizarEmpleado(empleado);
+        boolean res = ServicioEmpleado.actualizarEmpleado(empleado);
         
         if (res){
-            JOptionPane.showMessageDialog(null, "Empresa actualizada");
+            JOptionPane.showMessageDialog(null, "Empleado actualizado");
         } else {
             JOptionPane.showMessageDialog(null, "Error al actualizar");   
         }

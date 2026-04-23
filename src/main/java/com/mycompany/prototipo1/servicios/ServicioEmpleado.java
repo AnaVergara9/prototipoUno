@@ -5,6 +5,7 @@
 package com.mycompany.prototipo1.servicios;
 
 import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -31,9 +32,16 @@ public class ServicioEmpleado {
     
     public static boolean guardarEmpleado (Empleado empleado){
         
-        Empleado buscado = buscarEmpleado(empleado.getIdEmpleado());
+        Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
         
-        if (buscado != null){
+        //Valida que no exista el ID
+        if (empleadobuscado != null){
+            return false;
+        }
+        
+        //Valida que exista la empresa y este activa
+        if (empresa == null || !empresa.getEstado().equals("Activo")){
             return false;
         }
         
@@ -56,15 +64,15 @@ public class ServicioEmpleado {
     public static Empleado buscarEmpleado (int idBuscado){
         try {
             RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            
             file.seek(0);
+            
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
-                if (nit == idBuscado &  estado.equals("Activo")){
+                if (id == idBuscado &  estado.equals("Activo")){
                     Empleado empleadoBuscado = new Empleado (id, nit, nombre,salario,estado);
                     return empleadoBuscado;
                 }
@@ -76,7 +84,7 @@ public class ServicioEmpleado {
         return null;
     }
     
-    public static boolean eliminarEmpleado (int id) throws IOException{
+    /*public static boolean eliminarEmpleado (int id) throws IOException{
         int pos = (contarRegistros(id)*TAM_REGISTRO);
         
         try {
@@ -92,10 +100,41 @@ public class ServicioEmpleado {
             return false;
         }
         return true;
-        
+    }
+*/
+    public static boolean eliminarEmpleado (int idBuscado){
+         try {
+            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            file.seek(0);
+            
+            while (file.getFilePointer() < file.length()){
+                int id = file.readInt();
+                int nit = file.readInt();
+                String nombre = file.readUTF().trim();
+                double salario = file.readDouble();
+                String estado = file.readUTF().trim();
+                if (id == idBuscado){
+                    file.seek(file.getFilePointer()-TAM_ESTADO);
+                    file.writeUTF(ajustarTamaño(TAM_ESTADO,"Inactivo"));
+                    return true;
+                }
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }  
+        return false;
     }
     
     public static boolean actualizarEmpleado (Empleado empleado){
+        Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
+        
+        //Valida que exista el empleado - empleado y empresa activos
+        if (empleadobuscado == null || !empleadobuscado.getEstado().equals("Activo") || !empresa.getEstado().equals("Activo")){
+            return false;
+        }
+        
         try {
             RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             
@@ -103,11 +142,11 @@ public class ServicioEmpleado {
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
-                String nombre = file.readUTF();
+                String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
           
-                if (nit == empleado.getIdEmpleado()){
+                if (id == empleado.getIdEmpleado()){
                     file.seek(file.getFilePointer() - TAM_REGISTRO);
                     file.writeInt(empleado.getIdEmpleado());
                     file.writeInt(empleado.getNitEmpresa());
@@ -153,10 +192,8 @@ public class ServicioEmpleado {
         return -1;
     }
     
-    public static List obtenerEmpleado(){
-        
-        List <Empleado> empresas = new ArrayList();
-
+    public static List obtenerEmpleados(){
+        List <Empleado> empleados = new ArrayList();
         Empleado emp = null;
         
         try {
@@ -171,23 +208,23 @@ public class ServicioEmpleado {
                 String estado = file.readUTF().trim();
                 
                 emp = new Empleado(id, nit, nombre, salario, estado);
-                empresas.add(emp);
+                empleados.add(emp);
             }
             file.close();
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-        return empresas;
+        return empleados;
     }
     
     public static double sumatoria(){
         double sumatoria = 0;
         try {
             RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            //Se posiciona al inicio del archivo
             file.seek(0);
+            
             while(file.getFilePointer() < file.length()){
-                 int id = file.readInt();
+                int id = file.readInt();
                 int nit = file.readInt();
                 String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
@@ -210,10 +247,10 @@ public class ServicioEmpleado {
         
         try {
             RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            //Se posiciona al inicio del archivo
             file.seek(0);
+            
             while(file.getFilePointer() < file.length()){
-                 int id = file.readInt();
+                int id = file.readInt();
                 int nit = file.readInt();
                 String nombre = file.readUTF().trim();
                 double salario = file.readDouble();

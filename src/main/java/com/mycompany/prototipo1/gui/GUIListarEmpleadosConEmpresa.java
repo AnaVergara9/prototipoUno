@@ -4,23 +4,25 @@
  */
 package com.mycompany.prototipo1.gui;
 
-import com.mycompany.prototipo1.model.Empleado; 
+import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.Empresa;
 import com.mycompany.prototipo1.servicios.ServicioEmpleado;
-import javax.swing.JOptionPane;
+import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author anaso
  */
-public class GUIBuscarEmpleado extends javax.swing.JFrame {
+public class GUIListarEmpleadosConEmpresa extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIBuscarEmpleado.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarEmpleadosConEmpresa.class.getName());
 
     /**
-     * Creates new form GUIBuscarEmpresa
+     * Creates new form GUIListarEmpresas
      */
-    public GUIBuscarEmpleado() {
+    public GUIListarEmpleadosConEmpresa() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -34,30 +36,23 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscarID = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        btnListarTodo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar Empleado");
-        setName("Buscar Empleado"); // NOI18N
+        setTitle("Listar Empleados con Empresa");
+        setName("Listar Empleados con Empresa"); // NOI18N
 
-        jLabel1.setText("Documento:");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
-
-        jLabel2.setText("Ingrese el N. de Documento del empleado:");
+        btnListarTodo.setText("Listar Todo");
+        btnListarTodo.addActionListener(this::btnListarTodoActionPerformed);
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
+                "Documento", "Nombre", "Salario", "Nit Empresa", "Nombre Empresa"
             }
         ) {
             Class[] types = new Class [] {
@@ -82,62 +77,42 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(btnBuscar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(btnListarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addComponent(btnListarTodo)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        //Valida que ID no este vacio
-        if (txtBuscarID.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this,"Debe ingresar un N° de documento");
-            return;
-        }
-        
-        //Valida que el ID ingresado sea numericos
-        int documento;
-        try{
-            documento = Integer.parseInt(txtBuscarID.getText());
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this,"El documento debe ser numérico");
-            return;
-        }
-        
-        Empleado emp = ServicioEmpleado.buscarEmpleado(documento);
-        if (emp == null){
-            JOptionPane.showInternalMessageDialog(null, "Empleado no encontrado");
-        }else{
-            DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
+        List <Empleado> empleados = ServicioEmpleado.obtenerEmpleados();
+        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNombre(),emp.getSalario(),emp.getNitEmpresa(),emp.getEstado()});
+        for(Empleado e : empleados){
+             if (e.getEstado().equals("Activo")){
+                 Empresa emp = ServicioEmpresa.buscarEmpresa(e.getNitEmpresa());
+                 if (emp != null){
+                     model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(), emp.getNombre()});
+                 }
+            }
         }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnListarTodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,15 +136,12 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIBuscarEmpleado().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIListarEmpleadosConEmpresa().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnListarTodo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEmpleados;
-    private javax.swing.JTextField txtBuscarID;
     // End of variables declaration//GEN-END:variables
 }

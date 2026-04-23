@@ -4,20 +4,21 @@
  */
 package com.mycompany.prototipo1.gui;
 
-import com.mycompany.prototipo1.servicios.ServicioEmpresa;
+import com.mycompany.prototipo1.servicios.ServicioEmpleado;
+
 
 /**
  *
  * @author anaso
  */
-public class GUISumatoriaIngresos extends javax.swing.JFrame {
+public class GUISumatoriaSalarios extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISumatoriaIngresos.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISumatoriaSalarios.class.getName());
 
     /**
      * Creates new form SumatoriaIngresos
      */
-    public GUISumatoriaIngresos() {
+    public GUISumatoriaSalarios() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -38,15 +39,15 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
         txtRegistros = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Sumatoria Ingresos Anuales");
-        setName("Sumatoria Ingresos Anuales"); // NOI18N
+        setTitle("Sumatoria Salarios");
+        setName("Sumatoria Salarios"); // NOI18N
 
         btSumatoria.setText("Calcular Sumatoria");
         btSumatoria.addActionListener(this::btSumatoriaActionPerformed);
 
-        jLabel1.setText("Total de empresas activas: ");
+        jLabel1.setText("Total de empleados activos:");
 
-        jLabel2.setText("Sumatoria de ingresos: ");
+        jLabel2.setText("Sumatoria de salarios: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,9 +67,9 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSumatoria))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
+                        .addGap(127, 127, 127)
                         .addComponent(btSumatoria)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,18 +82,18 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtSumatoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(52, 52, 52)
                 .addComponent(btSumatoria)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSumatoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSumatoriaActionPerformed
-        int nActivos = ServicioEmpresa.registrosActivos();
-        double sumatoriaIngresos = ServicioEmpresa.sumatoria();
-        txtSumatoria.setText(String.valueOf(sumatoriaIngresos));
+        int nActivos = ServicioEmpleado.registrosActivos();
+        double sumatoriaSalarios = ServicioEmpleado.sumatoria();
+        txtSumatoria.setText(String.valueOf(sumatoriaSalarios));
         txtRegistros.setText(String.valueOf(nActivos));
         
     }//GEN-LAST:event_btSumatoriaActionPerformed
@@ -119,7 +120,7 @@ public class GUISumatoriaIngresos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUISumatoriaIngresos().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUISumatoriaSalarios().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
