@@ -54,7 +54,7 @@ public class ServicioEmpresa {
             if (conn != null) {
                 stmt = conn.createStatement();
                 //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
-                String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, INGRESOS, FACTURACION, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', '" + empresa.isFacturacion() + "', '" + empresa.getEstado() + "');";
+                String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, ING_ANUALES, FAC_ELEC, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', " + empresa.getIngresosAnuales() + ", '" + (empresa.isFacturacion() ? "S" : "N") + "', 'AC')";
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
             } else {
@@ -84,20 +84,20 @@ public class ServicioEmpresa {
             
             if (conn != null) {
                stmt = conn.createStatement();
-                String selectDataSQL = "SELECT * FROM EMPRESA;"; // Completar
+                String selectDataSQL = "SELECT * FROM EMPRESA WHERE NIT = " + nitBuscado + " AND ESTADO = 'AC'"; 
                 rs = stmt.executeQuery(selectDataSQL);
                 
                 while (rs.next()) {
                     int nit = rs.getInt("NIT");
                     String nombre = rs.getString("NOMBRE");
-                    double ingresos = rs.getDouble("INGRESOS");
-                    boolean facturacion = rs.getBoolean("FACTURACION");
+                    double ingresos = rs.getDouble("ING_ANUALES");
+                    String fac = rs.getString("FAC_ELEC");
+                    boolean facturacion = fac.equals("S");
                     String estado = rs.getString("ESTADO");
                     
-                    if (nit == nitBuscado &&  estado.equals("AC")){
                     Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
                     return empresaBuscada;
-                    }
+                    
                 }
                 conn.close(); 
             }
@@ -132,7 +132,7 @@ public class ServicioEmpresa {
             conn = DataBaseConnection.getConnection();
             if (conn != null) {
                stmt = conn.createStatement();
-                String insertDataSQL = "UPDATE EMPRESA SET ESTADO = 'IN' WHERE NIT = " + nit + ";";
+                String insertDataSQL = "UPDATE EMPRESA SET ESTADO = 'IN' WHERE NIT = " + nit;
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
             } else {
@@ -172,7 +172,7 @@ public class ServicioEmpresa {
             conn = DataBaseConnection.getConnection();
             if (conn != null) {
                stmt = conn.createStatement();
-                String insertDataSQL = "UPDATE EMPRESA SET NOMBRE = '" + empresa.getNombre() + "', '" + empresa.isFacturacion() + "' WHERE NIT = " + empresa.getNit() + ";";
+                String insertDataSQL = "UPDATE EMPRESA SET NOMBRE = '" + empresa.getNombre() + "', ING_ANUALES = " + empresa.getIngresosAnuales() + ", FAC_ELEC = '" + (empresa.isFacturacion() ? "S" : "N") + "' WHERE NIT = " + empresa.getNit();
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
             } else {
