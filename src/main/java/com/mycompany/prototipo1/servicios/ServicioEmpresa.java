@@ -54,7 +54,7 @@ public class ServicioEmpresa {
             if (conn != null) {
                 stmt = conn.createStatement();
                 //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
-                String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, INGRESOS, FACTURACION, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', '" + empresa.isFacturacion() + "', '" + empresa.getEstado() + "')";
+                String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, INGRESOS, FACTURACION, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', '" + empresa.isFacturacion() + "', '" + empresa.getEstado() + "');";
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
             } else {
@@ -84,7 +84,7 @@ public class ServicioEmpresa {
             
             if (conn != null) {
                stmt = conn.createStatement();
-                String selectDataSQL = "SELECT * FROM EMPRESA"; // Completar
+                String selectDataSQL = "SELECT * FROM EMPRESA;"; // Completar
                 rs = stmt.executeQuery(selectDataSQL);
                 
                 while (rs.next()) {
@@ -94,7 +94,7 @@ public class ServicioEmpresa {
                     boolean facturacion = rs.getBoolean("FACTURACION");
                     String estado = rs.getString("ESTADO");
                     
-                    if (nit == nitBuscado &  estado.equals("AC")){
+                    if (nit == nitBuscado &&  estado.equals("AC")){
                     Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
                     return empresaBuscada;
                     }
@@ -121,24 +121,36 @@ public class ServicioEmpresa {
     }
         
     
-    public static boolean eliminarEmpresa (int nit) throws IOException{
-        int pos = (contarRegistros(nit)*TAM_REGISTRO);
+    public static boolean eliminarEmpresa (int nit){
+        //int pos = (contarRegistros(nit)*TAM_REGISTRO);
+        Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(nit);
+        if (empresaBuscada == null){
+            return false;
+        }
         
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
-            
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String insertDataSQL = "UPDATE EMPRESA SET ESTADO = 'IN' WHERE NIT = " + nit + ";";
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }
+           /* RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(pos-10);
             file.writeUTF(ajustarTamaño(TAM_ESTADO,"Inactivo"));
-            
-            file.close();
-
-        } catch (FileNotFoundException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            file.close();S
+            */
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
             return false;
         }
         return true;
         
     }
+    
     
     public static boolean actualizarEmpresa (Empresa empresa){
         Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(empresa.getNit());
@@ -148,8 +160,7 @@ public class ServicioEmpresa {
             return false;
         }
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
-            
+            /*RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int nit = file.readInt();
@@ -157,23 +168,23 @@ public class ServicioEmpresa {
                 double ingresos = file.readDouble();
                 boolean facturacion = file.readBoolean();
                 String estado = file.readUTF();
-          
-                if (nit == empresa.getNit()){
-                    file.seek(file.getFilePointer() - TAM_REGISTRO);
-                    file.writeInt(empresa.getNit());
-                    file.writeUTF(ajustarTamaño(TAM_NOMBRE, empresa.getNombre()));
-                    file.writeDouble(empresa.getIngresosAnuales());
-                    file.writeBoolean(empresa.isFacturacion());
-                    file.writeUTF(ajustarTamaño(TAM_ESTADO,empresa.getEstado()));
-                    file.close();    
-                    return true;
-                }
-            }
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }  
-        return false;
+            */
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String insertDataSQL = "UPDATE EMPRESA SET NOMBRE = '" + empresa.getNombre() + "', '" + empresa.isFacturacion() + "' WHERE NIT = " + empresa.getNit() + ";";
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }     
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+            return false;
+        }
+        return true;
     }
+    
     
     public static int contarRegistros(int pNit){
         int contador = 0;

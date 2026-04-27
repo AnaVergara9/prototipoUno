@@ -131,26 +131,20 @@ public class GUIEliminarEmpresa extends javax.swing.JFrame {
             return;
         }
         
-        try {
-            int opcion = JOptionPane.showConfirmDialog(
-            this,
-            "<html><center><b>¿Seguro desea eliminar esta empresa?</b></center></html>",
-            "CONFIRMAR",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.WARNING_MESSAGE
-            );
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "<html><center><b>¿Seguro desea eliminar esta empresa?</b></center></html>",
+                "CONFIRMAR",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (opcion == JOptionPane.YES_OPTION){
+            int pNit =Integer.parseInt(txtNit.getText());
+            boolean res = ServicioEmpresa.eliminarEmpresa(pNit);
             
-            if (opcion == JOptionPane.YES_OPTION){
-                int pNit =Integer.parseInt(txtNit.getText());
-                boolean res = ServicioEmpresa.eliminarEmpresa(pNit);
-            
-                if(res) {
-                    JOptionPane.showMessageDialog(this, "Empresa eliminada correctamente!");                    
-                }
+            if(res) {
+                JOptionPane.showMessageDialog(this, "Empresa eliminada correctamente!");
             }
-        } catch (IOException ex) {
-            System.getLogger(GUIEliminarEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Error al eliminar Empresa!"); 
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
