@@ -217,32 +217,43 @@ public class ServicioEmpresa {
     public static List obtenerEmpresas(){
         //Se declara una variable llamada empresas de tipo ArrayList que permite "almacenar" objetos de tipo empresa
         List <Empresa> empresas = new ArrayList();
-        int nit;
-        String nombre;
-        double ingresos;
-        boolean facElec;
-        String estado = "activo";
         Empresa emp = null;
-        
+       
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
-            
-            file.seek(0);
-            
-            while(file.getFilePointer() < file.length()){
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+                stmt = conn.createStatement();
+                String selectDataSQL = "SELECT * FROM EMPRESA";
+                rs = stmt.executeQuery(selectDataSQL);
                 
+                while (rs.next()) {
+                    int nit = rs.getInt("NIT");
+                    String nombre = rs.getString("NOMBRE");
+                    double ingresos = rs.getDouble("ING_ANUALES");
+                    String fac = rs.getString("FAC_ELEC");
+                    boolean facturacion = fac.equals("S");
+                    String estado = rs.getString("ESTADO");
+                    
+                    emp = new Empresa (nit, nombre,ingresos,facturacion,estado);
+                    empresas.add(emp);
+                }
+                conn.close();
+            }
+          /*  RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            file.seek(0);
+            while(file.getFilePointer() < file.length()){ 
                 nit = file.readInt();
                 nombre = file.readUTF().trim();
                 ingresos = file.readDouble();
                 facElec = file.readBoolean();
                 estado = file.readUTF().trim();
-                
                 emp = new Empresa(nit, nombre, ingresos, facElec, estado);
                 empresas.add(emp);
             }
-            file.close();
+            file.close(); */   
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
+            return null;
         }
         return empresas;
     }
@@ -250,7 +261,20 @@ public class ServicioEmpresa {
     public static double sumatoria(){
         double sumatoria = 0;
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            conn = DataBaseConnection.getConnection();
+            
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT ING_ANUALES FROM EMPRESA WHERE ESTADO = 'AC'"; 
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                while (rs.next()) {
+                    double ingresos = rs.getDouble("ING_ANUALES");
+                    sumatoria = sumatoria + ingresos;
+                }
+                conn.close(); 
+            }
+           /* RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             //Se posiciona al inicio del archivo
             file.seek(0);
             while(file.getFilePointer() < file.length()){
@@ -259,25 +283,35 @@ public class ServicioEmpresa {
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
-                
                 if (estado.equalsIgnoreCase("Activo")){
                     sumatoria = sumatoria + ingresos;
                 }
             }
             file.close();
-            return sumatoria;
+            */
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-        return 0;
+        return sumatoria;
     }
     
     public static int registrosActivos(){
         int contador = 0;
         
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
-            //Se posiciona al inicio del archivo
+            conn = DataBaseConnection.getConnection();
+            
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT COUNT(*) AS TOTAL FROM EMPRESA WHERE ESTADO = 'AC'"; 
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                if (rs.next()) {
+                    contador = rs.getInt("TOTAL");
+                }
+                conn.close();
+            }
+           /* RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int nit = file.readInt();
@@ -285,18 +319,15 @@ public class ServicioEmpresa {
                 double ingresos = file.readDouble();
                 boolean facElec = file.readBoolean();
                 String estado = file.readUTF().trim();
-                
                 if (estado.equalsIgnoreCase("Activo")){
                     contador ++;
                 }
             }
-            file.close();
-            return contador;
-            
+            file.close(); */    
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-        return 0;
+        return contador;
     }
 
     private static Empresa buscarEmpresaPorNombre(String nombreBuscado) {

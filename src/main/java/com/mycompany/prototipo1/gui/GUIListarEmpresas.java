@@ -103,7 +103,7 @@ public class GUIListarEmpresas extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblEmpresas.getModel();
         model.setRowCount(0);
         for(Empresa e : empresas){
-             if (e.getEstado().equals("Activo")){
+             if (e.getEstado().equals("AC")){
                 model.addRow(new Object[]{e.getNit(),e.getNombre(),e.getIngresosAnuales(),e.isFacturacion(),e.getEstado()});
             }
         }
