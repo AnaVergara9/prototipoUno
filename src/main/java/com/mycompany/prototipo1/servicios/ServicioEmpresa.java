@@ -135,14 +135,6 @@ public class ServicioEmpresa {
     }
     
     public static int contarRegistros(int pNit){
-<<<<<<< HEAD
-        int nit;
-        String nombre;
-        double ingresos;
-        boolean facElec;
-        String estado;
-=======
->>>>>>> a010a51f5f34866f1a2e06bbbe5484692d1470c1
         int contador = 0;
         
         try {
