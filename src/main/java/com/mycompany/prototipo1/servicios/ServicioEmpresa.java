@@ -4,10 +4,14 @@
  */
 package com.mycompany.prototipo1.servicios;
 
+import com.mycompany.prototipo1.data.DataBaseConnection;
 import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,6 +21,10 @@ import javax.swing.JOptionPane;
  * @author anaso
  */
 public class ServicioEmpresa {
+    
+    private static Connection conn = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
     
     public static final int TAM_NOMBRE = 25;
     public static final int TAM_ESTADO = 8;
@@ -42,6 +50,17 @@ public class ServicioEmpresa {
         }
         
         try {
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+                stmt = conn.createStatement();
+                //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
+                String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, INGRESOS, FACTURACION, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', '" + empresa.isFacturacion() + "', '" + empresa.getEstado() + "')";
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }
+            /* 
             RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(file.length());
             file.writeInt(empresa.getNit());
@@ -51,16 +70,38 @@ public class ServicioEmpresa {
             file.writeUTF(ajustarTamaño(TAM_ESTADO,empresa.getEstado()));
             file.close();
             return true;
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            */   
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
             return false;
         }
+        return true;
     }
     
     public static Empresa buscarEmpresa (int nitBuscado){
         try {
-            RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
+            conn = DataBaseConnection.getConnection();
             
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT * FROM EMPRESA"; // Completar
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                while (rs.next()) {
+                    int nit = rs.getInt("NIT");
+                    String nombre = rs.getString("NOMBRE");
+                    double ingresos = rs.getDouble("INGRESOS");
+                    boolean facturacion = rs.getBoolean("FACTURACION");
+                    String estado = rs.getString("ESTADO");
+                    
+                    if (nit == nitBuscado &  estado.equals("AC")){
+                    Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
+                    return empresaBuscada;
+                    }
+                }
+                conn.close(); 
+            }
+           /* RandomAccessFile file = new RandomAccessFile("data//empresas.txt", "rw");
             file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int nit = file.readInt();
@@ -72,13 +113,13 @@ public class ServicioEmpresa {
                     Empresa empresaBuscada = new Empresa (nit, nombre,ingresos,facturacion,estado);
                     return empresaBuscada;
                 }
-            }
-            file.close();
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }  
+            } */     
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+        }
         return null;
     }
+        
     
     public static boolean eliminarEmpresa (int nit) throws IOException{
         int pos = (contarRegistros(nit)*TAM_REGISTRO);

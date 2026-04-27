@@ -4,11 +4,15 @@
  */
 package com.mycompany.prototipo1.servicios;
 
+import com.mycompany.prototipo1.data.DataBaseConnection;
 import com.mycompany.prototipo1.model.Empleado;
 import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,11 @@ import java.util.List;
  * @author anaso
  */
 public class ServicioEmpleado {
+    
+    private static Connection conn = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
+    
     public static final String NOMBRE_ARCHIVO = "data//empleados.txt";
     public static final int TAM_NOMBRE = 20;
     public static final int TAM_ESTADO = 8;
@@ -46,7 +55,17 @@ public class ServicioEmpleado {
         }
         
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+                stmt = conn.createStatement();
+                //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
+                String insertDataSQL = "INSERT INTO EMPLEADO (ID, NIT, NOMBRE, SALARIO, ESTADO) VALUES(" + empleado.getIdEmpleado() + ", " +  empleado.getNitEmpresa() + ", '" + empleado.getNombre() + "', '" + empleado.getEstado() + "')";
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }
+            /*RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             file.seek(file.length());
             file.writeInt(empleado.getIdEmpleado());
             file.writeInt(empleado.getNitEmpresa());
@@ -55,10 +74,12 @@ public class ServicioEmpleado {
             file.writeUTF(ajustarTamaño(TAM_ESTADO,empleado.getEstado()));
             file.close();
             return true;
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            */   
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
             return false;
         }
+        return true;
     }
     
     public static Empleado buscarEmpleado (int idBuscado){
