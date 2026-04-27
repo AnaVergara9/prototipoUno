@@ -34,48 +34,33 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscarID = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEmpleados = new javax.swing.JTable();
+        txtActualizarNombre = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtActualizarSalario = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtActualizarNitEmp = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtActualizarID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Empleado");
         setName("Buscar Empleado"); // NOI18N
 
-        jLabel1.setText("Documento:");
+        jLabel2.setText("Ingrese el N. de Documento del empleado:");
+
+        jLabel5.setText("Nombre: ");
+
+        jLabel6.setText("Salario:");
+
+        jLabel8.setText("Nit:");
+
+        jLabel4.setText("Documento:");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
-
-        jLabel2.setText("Ingrese el N. de Documento del empleado:");
-
-        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,60 +68,83 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnBuscar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtActualizarSalario)
+                            .addComponent(txtActualizarNitEmp)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtActualizarNombre))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtActualizarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtActualizarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtActualizarSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtActualizarNitEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(31, 31, 31))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //Valida que no este vacio el ID
+        if (txtActualizarID.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Debe ingresar el N° de Documento");
+            return;
+        }
 
-        //Valida que ID no este vacio
-        if (txtBuscarID.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this,"Debe ingresar un N° de documento");
-            return;
-        }
-        
-        //Valida que el ID ingresado sea numericos
-        int documento;
+        //Valida que el ID ingresado sea numerico
+        int id;
         try{
-            documento = Integer.parseInt(txtBuscarID.getText());
+            id = Integer.parseInt(txtActualizarID.getText().trim());
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this,"El documento debe ser numérico");
+            JOptionPane.showMessageDialog(this,"El NIT/Ingresos deben ser numéricos");
             return;
         }
-        
-        Empleado emp = ServicioEmpleado.buscarEmpleado(documento);
-        if (emp == null){
-            JOptionPane.showInternalMessageDialog(null, "Empleado no encontrado");
-        }else{
-            DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
-        model.setRowCount(0);
-        model.addRow(new Object[]{emp.getIdEmpleado(),emp.getNombre(),emp.getSalario(),emp.getNitEmpresa(),emp.getEstado()});
+
+        Empleado empleado = ServicioEmpleado.buscarEmpleado(id);
+
+        if (empleado != null) {
+            txtActualizarNombre.setText(empleado.getNombre().trim());
+            txtActualizarSalario.setText(String.valueOf(empleado.getSalario()).trim());
+            txtActualizarNitEmp.setText(String.valueOf(empleado.getNitEmpresa()));
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el empleado");
         }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -166,10 +174,14 @@ public class GUIBuscarEmpleado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEmpleados;
-    private javax.swing.JTextField txtBuscarID;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField txtActualizarID;
+    private javax.swing.JTextField txtActualizarNitEmp;
+    private javax.swing.JTextField txtActualizarNombre;
+    private javax.swing.JTextField txtActualizarSalario;
     // End of variables declaration//GEN-END:variables
 }
