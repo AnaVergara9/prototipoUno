@@ -177,17 +177,25 @@ public class ServicioEmpleado {
     }
     
     public static boolean actualizarEmpleado (Empleado empleado){
+        
         Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
         Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
-        
         //Valida que exista el empleado - empleado y empresa activos
-        if (empleadobuscado == null || !empleadobuscado.getEstado().equals("Activo") || !empresa.getEstado().equals("Activo")){
+        if (empleadobuscado == null || !empleadobuscado.getEstado().equals("AC") || !empresa.getEstado().equals("AC")){
             return false;
         }
         
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String insertDataSQL = "UPDATE EMPLEADO SET NOMBRE = '" + empleado.getNombre() + "', SALARIO = " + empleado.getSalario() + ", EMPRESANIT = " + empleado.getNitEmpresa() + " WHERE NUM_DOC = " + empleado.getIdEmpleado();
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }
+         /* RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
@@ -195,7 +203,6 @@ public class ServicioEmpleado {
                 String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
-          
                 if (id == empleado.getIdEmpleado()){
                     file.seek(file.getFilePointer() - TAM_REGISTRO);
                     file.writeInt(empleado.getIdEmpleado());
@@ -206,11 +213,12 @@ public class ServicioEmpleado {
                     file.close();    
                     return true;
                 }
-            }
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }  
-        return false;
+            }*/
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+            return false;
+        }
+        return true;
     }
     
     public static int contarRegistros(int pNit){
@@ -247,9 +255,26 @@ public class ServicioEmpleado {
         Empleado emp = null;
         
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+                stmt = conn.createStatement();
+                String selectDataSQL = "SELECT * FROM EMPLEADO";
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                while (rs.next()) {
+                    int id = rs.getInt("NUM_DOC");
+                    int nit = rs.getInt("EMPRESANIT");
+                    String nombre = rs.getString("NOMBRE");
+                    double salario = rs.getDouble("SALARIO");
+                    String estado = rs.getString("ESTADO");
+                    
+                    emp = new Empleado (id, nit, nombre, salario, estado);
+                    empleados.add(emp);
+                }
+                conn.close();
+            }
+           /* RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             file.seek(0);
-            
             while(file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
@@ -260,9 +285,10 @@ public class ServicioEmpleado {
                 emp = new Empleado(id, nit, nombre, salario, estado);
                 empleados.add(emp);
             }
-            file.close();
+            file.close(); */
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
+            return null;
         }
         return empleados;
     }

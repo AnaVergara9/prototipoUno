@@ -103,7 +103,7 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
         for(Empleado e : empleados){
-             if (e.getEstado().equals("Activo")){
+             if (e.getEstado().equals("AC")){
                 model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(),e.getEstado()});
             }
         }

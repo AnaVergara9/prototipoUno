@@ -149,7 +149,7 @@ public class ServicioEmpresa {
         Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(empresa.getNit());
         
         //Valida que exista la empresa y este activa
-        if (empresaBuscada == null || !empresa.getEstado().equals("Activo")){
+        if (empresaBuscada == null || !empresa.getEstado().equals("AC")){
             return false;
         }
         try {
