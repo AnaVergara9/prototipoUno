@@ -5,6 +5,7 @@
 package com.mycompany.prototipo1.gui;
 
 import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.EmpleadoLista;
 import com.mycompany.prototipo1.servicios.ServicioEmpleado;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -50,14 +51,14 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Documento", "Nombre", "Salario", "Nit Empresa", "Estado"
+                "Documento", "Nombre", "Salario", "Estado", "Nit Empresa", "Nombre Empresa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -99,12 +100,12 @@ public class GUIListarEmpleados extends javax.swing.JFrame {
 
     private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
 
-        List <Empleado> empleados = ServicioEmpleado.obtenerEmpleados();
+        List <EmpleadoLista> empleados = ServicioEmpleado.obtenerEmpleados();
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
-        for(Empleado e : empleados){
+        for(EmpleadoLista e : empleados){
              if (e.getEstado().equals("AC")){
-                model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getNitEmpresa(),e.getEstado()});
+                model.addRow(new Object[]{e.getIdEmpleado(),e.getNombre(),e.getSalario(),e.getEstado(),e.getNitEmpresa(),e.getNombreEmpresa()});
             }
         }
     }//GEN-LAST:event_btnListarTodoActionPerformed

@@ -6,6 +6,7 @@ package com.mycompany.prototipo1.servicios;
 
 import com.mycompany.prototipo1.data.DataBaseConnection;
 import com.mycompany.prototipo1.model.Empleado;
+import com.mycompany.prototipo1.model.EmpleadoLista;
 import com.mycompany.prototipo1.model.Empresa;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -251,14 +252,14 @@ public class ServicioEmpleado {
     }
     
     public static List obtenerEmpleados(){
-        List <Empleado> empleados = new ArrayList();
-        Empleado emp = null;
+        List <EmpleadoLista> empleados = new ArrayList();
+        EmpleadoLista emp = null;
         
         try {
             conn = DataBaseConnection.getConnection();
             if (conn != null) {
                 stmt = conn.createStatement();
-                String selectDataSQL = "SELECT * FROM EMPLEADO";
+                String selectDataSQL = "SELECT ED.NUM_DOC, ED.EMPRESANIT, ED.NOMBRE, ED.SALARIO, ED.ESTADO, ES.NOMBRE AS NOMBRE_EMPRESA FROM EMPLEADO ED, EMPRESA ES WHERE ES.NIT = ED.EMPRESANIT";
                 rs = stmt.executeQuery(selectDataSQL);
                 
                 while (rs.next()) {
@@ -267,8 +268,9 @@ public class ServicioEmpleado {
                     String nombre = rs.getString("NOMBRE");
                     double salario = rs.getDouble("SALARIO");
                     String estado = rs.getString("ESTADO");
+                    String nombreEs = rs.getString("NOMBRE_EMPRESA");
                     
-                    emp = new Empleado (id, nit, nombre, salario, estado);
+                    emp = new EmpleadoLista (id, nit, nombre, salario, estado, nombreEs);
                     empleados.add(emp);
                 }
                 conn.close();
@@ -296,53 +298,71 @@ public class ServicioEmpleado {
     public static double sumatoria(){
         double sumatoria = 0;
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            file.seek(0);
+            conn = DataBaseConnection.getConnection();
             
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT SALARIO FROM EMPLEADO WHERE ESTADO = 'AC'"; 
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                while (rs.next()) {
+                    double salario = rs.getDouble("SALARIO");
+                    sumatoria = sumatoria + salario;
+                }
+                conn.close(); 
+            }
+           /* RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
                 String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
-                
                 if (estado.equalsIgnoreCase("Activo")){
                     sumatoria = sumatoria + salario;
                 }
             }
-            file.close();
-            return sumatoria;
+            file.close(); */
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-        return 0;
+        return sumatoria;
     }
     
     public static int registrosActivos(){
         int contador = 0;
         
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            file.seek(0);
+            conn = DataBaseConnection.getConnection();
             
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT COUNT(*) AS TOTAL FROM EMPLEADO WHERE ESTADO = 'AC'"; 
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                if (rs.next()) {
+                    contador = rs.getInt("TOTAL");
+                }
+                conn.close();
+            }
+          /*  RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            file.seek(0);
             while(file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
                 String nombre = file.readUTF().trim();
                 double salario = file.readDouble();
                 String estado = file.readUTF().trim();
-                
                 if (estado.equalsIgnoreCase("Activo")){
                     contador ++;
                 }
             }
-            file.close();
-            return contador;
-            
+            file.close(); */
         } catch (Exception ex) {
             System.out.println("Error! " + ex);
         }
-        return 0;
+        return contador;
     }
     
 }
