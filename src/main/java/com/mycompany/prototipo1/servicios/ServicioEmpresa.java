@@ -44,16 +44,10 @@ public class ServicioEmpresa {
             return false;
         }
         
-        //Valida que otra empresa no se llame igual
-        if (buscarEmpresaPorNombre(empresa.getNombre())!=null){
-            return false;
-        }
-        
         try {
             conn = DataBaseConnection.getConnection();
             if (conn != null) {
                 stmt = conn.createStatement();
-                //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
                 String insertDataSQL = "INSERT INTO EMPRESA (NIT, NOMBRE, ING_ANUALES, FAC_ELEC, ESTADO) VALUES(" + empresa.getNit() + ", '" +  empresa.getNombre() + "', " + empresa.getIngresosAnuales() + ", '" + (empresa.isFacturacion() ? "S" : "N") + "', 'AC')";
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
@@ -122,7 +116,7 @@ public class ServicioEmpresa {
         
     
     public static boolean eliminarEmpresa (int nit){
-        //int pos = (contarRegistros(nit)*TAM_REGISTRO);
+        
         Empresa empresaBuscada = ServicioEmpresa.buscarEmpresa(nit);
         if (empresaBuscada == null){
             return false;
@@ -148,7 +142,6 @@ public class ServicioEmpresa {
             return false;
         }
         return true;
-        
     }
     
     

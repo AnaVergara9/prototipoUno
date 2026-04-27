@@ -153,7 +153,7 @@ public class GUIAdicionarEmpresa extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String opcion = (String) cmbFacturacion.getSelectedItem();
         boolean facturacion = opcion.equals("Si");
-        String estado = "Activo";
+        String estado = "AC";
         
         Empresa nueva = new Empresa (nit,nombre,ingresos,facturacion,estado);
         

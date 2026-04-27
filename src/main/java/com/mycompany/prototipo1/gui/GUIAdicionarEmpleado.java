@@ -134,7 +134,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         int nit;
         double salario;
         try{
-            id = Integer.parseInt(txtDocumento.getText());
+            id = Integer.parseInt(txtDocumento.getText().trim());
             nit = Integer.parseInt(txtNitEmpresa.getText());
             salario = Double.parseDouble(txtSalario.getText());
         }catch(NumberFormatException e){
@@ -149,7 +149,7 @@ public class GUIAdicionarEmpleado extends javax.swing.JFrame {
         }
         
         String nombre = txtNombre.getText();
-        String estado = "Activo";
+        String estado = "AC";
         
         Empleado nuevo = new Empleado (id,nit,nombre,salario,estado);
         

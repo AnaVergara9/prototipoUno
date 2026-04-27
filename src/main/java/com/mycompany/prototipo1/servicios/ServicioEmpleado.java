@@ -40,17 +40,13 @@ public class ServicioEmpleado {
    }
     
     public static boolean guardarEmpleado (Empleado empleado){
-        
-        Empleado empleadobuscado = buscarEmpleado(empleado.getIdEmpleado());
-        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
-        
         //Valida que no exista el ID
-        if (empleadobuscado != null){
+        if (buscarEmpleado(empleado.getIdEmpleado())!=null){
             return false;
         }
-        
+        Empresa empresa = ServicioEmpresa.buscarEmpresa(empleado.getNitEmpresa());
         //Valida que exista la empresa y este activa
-        if (empresa == null || !empresa.getEstado().equals("Activo")){
+        if (empresa == null || !empresa.getEstado().equals("AC")){
             return false;
         }
         
@@ -58,8 +54,7 @@ public class ServicioEmpleado {
             conn = DataBaseConnection.getConnection();
             if (conn != null) {
                 stmt = conn.createStatement();
-                //String insertDataSQL = "INSERT INTO EMPLEADO (CODIGO, NOMBRE) VALUES (" + dpto.getCodigo() + ",'" + dpto.getNombre() + "')";
-                String insertDataSQL = "INSERT INTO EMPLEADO (ID, NIT, NOMBRE, SALARIO, ESTADO) VALUES(" + empleado.getIdEmpleado() + ", " +  empleado.getNitEmpresa() + ", '" + empleado.getNombre() + "', '" + empleado.getEstado() + "')";
+                String insertDataSQL = "INSERT INTO EMPLEADO (NUM_DOC, EMPRESANIT, NOMBRE, SALARIO, ESTADO) VALUES(" + empleado.getIdEmpleado() + ", " +  empleado.getNitEmpresa() + ", '" + empleado.getNombre() + "', " + empleado.getSalario() + ", '" + empleado.getEstado() + "')";
                 int rowsAffected = stmt.executeUpdate(insertDataSQL);
                 conn.close();
             } else {
@@ -84,9 +79,28 @@ public class ServicioEmpleado {
     
     public static Empleado buscarEmpleado (int idBuscado){
         try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
-            file.seek(0);
+            conn = DataBaseConnection.getConnection();
             
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String selectDataSQL = "SELECT * FROM EMPLEADO WHERE NUM_DOC = " + idBuscado + " AND ESTADO = 'AC'"; 
+                rs = stmt.executeQuery(selectDataSQL);
+                
+                while (rs.next()) {
+                    int id = rs.getInt("NUM_DOC");
+                    int nit = rs.getInt("EMPRESANIT");
+                    String nombre = rs.getString("NOMBRE");
+                    double salario = rs.getDouble("SALARIO");
+                    String estado = rs.getString("ESTADO");
+                    
+                    Empleado empleadoBuscado = new Empleado (id, nit, nombre, salario, estado);
+                    return empleadoBuscado;
+                    
+                }
+                conn.close(); 
+            }
+          /*  RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+            file.seek(0);
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
@@ -98,9 +112,9 @@ public class ServicioEmpleado {
                     return empleadoBuscado;
                 }
             }
-            file.close();
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            file.close(); */
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
         }  
         return null;
     }
@@ -124,10 +138,24 @@ public class ServicioEmpleado {
     }
 */
     public static boolean eliminarEmpleado (int idBuscado){
+        
+        Empleado empleadoBuscado = ServicioEmpleado.buscarEmpleado(idBuscado);
+        if (empleadoBuscado == null){
+            return false;
+        }
+        
          try {
-            RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
+             conn = DataBaseConnection.getConnection();
+            if (conn != null) {
+               stmt = conn.createStatement();
+                String insertDataSQL = "UPDATE EMPLEADO SET ESTADO = 'IN' WHERE NUM_DOC = " + idBuscado;
+                int rowsAffected = stmt.executeUpdate(insertDataSQL);
+                conn.close();
+            } else {
+                return false;
+            }
+          /*  RandomAccessFile file = new RandomAccessFile(NOMBRE_ARCHIVO, "rw");
             file.seek(0);
-            
             while (file.getFilePointer() < file.length()){
                 int id = file.readInt();
                 int nit = file.readInt();
@@ -140,11 +168,12 @@ public class ServicioEmpleado {
                     return true;
                 }
             }
-            file.close();
-        } catch (IOException ex) {
-            System.getLogger(ServicioEmpresa.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }  
-        return false;
+            file.close(); */
+        } catch (Exception ex) {
+            System.out.println("Error! " + ex);
+            return false;
+        }
+        return true;
     }
     
     public static boolean actualizarEmpleado (Empleado empleado){
